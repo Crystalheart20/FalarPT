@@ -1,0 +1,6 @@
+{
+  "name": "European Portuguese Learning PRD & Hub",
+  "description": "Collaborative interactive Product Requirements Document (PRD) designed by senior PMs from Duolingo, Babbel, Busuu, and Memrise, featuring comprehensive specifications and fully-functional lesson sandboxes covering reading, listening, vocabulary, speaking, grammar, and AI-powered writing reviews.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
