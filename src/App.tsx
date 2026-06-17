@@ -7,7 +7,8 @@ import { useState, useEffect } from 'react';
 import { 
   Trophy, BookOpen, Layers, Flame, Award, HelpCircle, AlertCircle,
   Sparkles, CheckCircle2, MessageSquare, Zap, Globe, Star, 
-  Database, Cpu, Compass, Mic, Heart, RefreshCw, Check, ArrowRight, Play, BookText, Swords
+  Database, Cpu, Compass, Mic, Heart, RefreshCw, Check, ArrowRight, Play, BookText, Swords,
+  Moon, Sun
 } from 'lucide-react';
 import { cefrLevels } from './curriculumData';
 import { sampleVocabularyList, sampleGrammarRules, sampleDialogues, sampleStories } from './prdData';
@@ -102,6 +103,23 @@ export default function App() {
   
   // Language support mode (Bilingual Mode defaults to true to assist beginners with side-by-side English translations)
   const [bilingualMode, setBilingualMode] = useState<boolean>(true);
+
+  // Night Mode state
+  const [nightMode, setNightMode] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('nightMode') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nightMode', String(nightMode));
+    } catch (e) {
+      // ignore
+    }
+  }, [nightMode]);
 
   // Gamified States
   const [xpPoints, setXpPoints] = useState<number>(145);
@@ -219,7 +237,7 @@ export default function App() {
   ].sort((a,b) => b.xp - a.xp);
 
   return (
-    <div className="min-h-screen bg-slate-50/40 text-slate-800 flex flex-col font-sans selection:bg-indigo-100 selection:text-indigo-900" id="aprender-pt-app">
+    <div className={`min-h-screen flex flex-col font-sans transition-all duration-200 ${nightMode ? 'dark bg-slate-950 text-slate-100' : 'bg-slate-50/40 text-slate-800 selection:bg-indigo-100 selection:text-indigo-900'}`} id="aprender-pt-app">
       
       {/* Top Navigation & Gamified HUD Bar */}
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 py-3.5 shadow-xs" id="custom-app-nav">
@@ -287,6 +305,30 @@ export default function App() {
             >
               <Globe className="w-3.5 h-3.5" />
               <span>{bilingualMode ? "Bilingual: ON" : "Bilingual: OFF"}</span>
+            </button>
+
+            {/* Night Mode Toggle */}
+            <button
+              onClick={() => setNightMode(!nightMode)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-colors border cursor-pointer ${
+                nightMode
+                  ? 'bg-amber-500 border-amber-500 text-slate-950 hover:bg-amber-400 shadow-xs'
+                  : 'bg-slate-800 border-slate-900 text-white hover:bg-slate-750'
+              }`}
+              id="night-mode-toggle"
+              title={nightMode ? "Ativar Modo Diurno" : "Ativar Modo Noturno"}
+            >
+              {nightMode ? (
+                <>
+                  <Sun className="w-3.5 h-3.5 fill-slate-950 text-slate-950" />
+                  <span>Modo Diurno</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5 fill-indigo-200 text-indigo-200" />
+                  <span>Modo Noturno</span>
+                </>
+              )}
             </button>
 
           </div>
