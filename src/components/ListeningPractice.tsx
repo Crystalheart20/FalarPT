@@ -10,9 +10,10 @@ import { Headphones, Volume2, EyeOff, Eye, CheckCircle, HelpCircle, Star, Sparkl
 
 interface ListeningPracticeProps {
   onEarnXp: (amount: number) => void;
+  bilingualMode?: boolean;
 }
 
-export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) {
+export default function ListeningPractice({ onEarnXp, bilingualMode = true }: ListeningPracticeProps) {
   const [activeDialogueId, setActiveDialogueId] = useState<string>(sampleDialogues[0].id);
   const [showTranslations, setShowTranslations] = useState<boolean>(true);
   const [selectedQuizIndex, setSelectedQuizIndex] = useState<number | null>(null);
@@ -84,25 +85,34 @@ export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) 
       {/* Sidebar: Scenarios list */}
       <div className="lg:col-span-4 space-y-4" id="listening-sidebar">
         
-        {/* PM Rationale */}
-        <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-4 flex gap-3 items-start" id="listening-ratio-card">
-          <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold shrink-0 shadow-xs" id="listening-avatar">
-            B
+        {/* Dialogues Intro Guidance */}
+        <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-4 flex gap-3 items-start animate-fade-in" id="listening-ratio-card">
+          <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shrink-0 shadow-xs text-sm" id="listening-avatar">
+            🎧
           </div>
           <div>
             <h4 className="text-xs font-bold text-emerald-800 uppercase tracking-wider" id="listening-pm-brand">
-              Busuu & Duolingo Listening Lab
+              {bilingualMode ? "Laboratório de Escuta Situacional / Situational Listening Lab" : "Laboratório de Escuta Situacional"}
             </h4>
-            <p className="text-xs text-emerald-700/90 mt-1 leading-relaxed" id="listening-pm-rationale">
-              "We synthesize real-life scenarios like administrative councils and corner cafes. Toggle translations off to simulate real-life street listening." <span className="font-semibold">— Sofia, Busuu PM</span>
+            <p className="text-xs text-emerald-705 mt-1 leading-relaxed" id="listening-pm-rationale">
+              {bilingualMode ? (
+                <>
+                  Pratique ouvir diálogos cotidianos e reais gravados com a pronúncia tradicional de Portugal. Desative as traduções para simular uma imersão completa nas ruas de Lisboa ou do Porto.
+                  <span className="block mt-1 text-slate-500 text-[11px] border-t border-emerald-205 border-emerald-200/50 pt-1 font-medium italic">
+                    Practice listening to real daily-life dialogues constructed with strict Portuguese accents. Toggle translation off to simulate complete immersion.
+                  </span>
+                </>
+              ) : (
+                "Pratique ouvir diálogos cotidianos e reais gravados com a pronúncia tradicional de Portugal. Desative as traduções para simular uma imersão completa nas ruas de Lisboa ou do Porto."
+              )}
             </p>
           </div>
         </div>
 
         {/* Dialogues */}
         <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-2.5" id="dialogues-menu-card">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" id="dialogues-header">
-            Authentic Scenarios
+          <h3 className="text-xs font-bold text-slate-405 uppercase tracking-wider mb-2" id="dialogues-header">
+            {bilingualMode ? "Cenários Autênticos / Authentic Scenarios" : "Authentic Scenarios"}
           </h3>
           {sampleDialogues.map((dial) => (
             <button
@@ -118,14 +128,14 @@ export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) 
               }}
               className={`w-full text-left p-3.5 rounded-xl transition-all border ${
                 activeDialogueId === dial.id 
-                  ? 'bg-emerald-50/50 border-emerald-300 text-emerald-900 font-medium' 
+                  ? 'bg-emerald-50/50 border-emerald-300 text-emerald-950 font-semibold' 
                   : 'bg-white border-slate-100 hover:bg-slate-50 text-slate-700'
               }`}
             >
               <span className="text-[9px] uppercase font-bold text-emerald-600 tracking-wider block" id={`dial-diff-${dial.id}`}>
-                {dial.difficulty}
+                {dial.difficulty} Mode
               </span>
-              <p className="text-xs font-semibold mt-1" id={`dial-title-${dial.id}`}>{dial.title}</p>
+              <p className="text-xs font-bold mt-1 text-slate-800" id={`dial-title-${dial.id}`}>{dial.title}</p>
             </button>
           ))}
         </div>
@@ -133,27 +143,27 @@ export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) 
         {/* Translation toggles */}
         <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-3" id="translation-settings-card">
           <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider" id="settings-header">
-            Audio Settings
+            {bilingualMode ? "Definições de Áudio / Audio Settings" : "Audio Settings"}
           </h4>
           <button
             id="toggle-translations-btn"
             onClick={() => setShowTranslations(!showTranslations)}
-            className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-colors text-slate-700 text-xs py-2.5 px-3 rounded-xl font-bold flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-colors text-slate-705 text-xs py-2.5 px-3 rounded-xl font-bold flex items-center justify-center gap-2 cursor-pointer"
           >
             {showTranslations ? (
               <>
-                <EyeOff className="w-4 h-4 text-slate-500" id="eyeoff-icon" />
-                Hide English Translations
+                <EyeOff className="w-4 h-4 text-slate-550" id="eyeoff-icon" />
+                {bilingualMode ? "Ocultar Tradução / Hide Translations" : "Hide English Translations"}
               </>
             ) : (
               <>
-                <Eye className="w-4 h-4 text-slate-500" id="eye-icon" />
-                Show English Translations
+                <Eye className="w-4 h-4 text-slate-550" id="eye-icon" />
+                {bilingualMode ? "Mostrar Tradução / Show Translations" : "Show English Translations"}
               </>
             )}
           </button>
-          <p className="text-[10px] text-slate-400 leading-normal text-center" id="settings-hint">
-            Hiding translations forces you to decode the auditory signals by ear, replicating a local Portugal environment!
+          <p className="text-[10px] text-slate-405 leading-normal text-center" id="settings-hint">
+            {bilingualMode ? "Ao ocultar as traduções, força o cérebro a descodificar os fonemas puros de Portugal, simulando imersão!" : "Hiding translations forces you to decode the auditory signals by ear, replicating a local Portugal environment!"}
           </p>
         </div>
       </div>
@@ -172,13 +182,13 @@ export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) 
                 {currentDialogue.title}
               </h2>
               <p className="text-xs text-slate-500 font-medium mt-1 italic" id="dialogue-scenario">
-                Scene: {currentDialogue.scenario}
+                {bilingualMode ? "Cenário / Scene" : "Scene"}: {currentDialogue.scenario}
               </p>
             </div>
             {solvedDialogueIds.has(currentDialogue.id) && (
               <span className="flex items-center gap-1 bg-green-50 text-green-700 text-xs px-2.5 py-1 rounded-full border border-green-200 font-bold shrink-0" id="dialogue-xp-badge">
                 <CheckCircle className="w-4 h-4" id="dialogue-check-icon" />
-                Solved (+30 XP)
+                {bilingualMode ? "Resolvido / Solved (+30 XP)" : "Solved (+30 XP)"}
               </span>
             )}
           </div>
@@ -253,7 +263,7 @@ export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) 
             <div className="flex items-center gap-1.5" id="dial-quiz-header">
               <Headphones className="w-4.5 h-4.5 text-indigo-500" id="dial-quiz-icon" />
               <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400 animate-pulse" id="dial-quiz-label">
-                Dialogue Comprehension Quests
+                {bilingualMode ? "Teste de Compreensão do Diálogo / Dialogue Comprehension Quests" : "Dialogue Comprehension Quests"}
               </h4>
             </div>
 
@@ -282,10 +292,14 @@ export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) 
                 >
                   <span id={`dial-option-text-${index}`}>{opt}</span>
                   {quizSubmitted && index === currentDialogue.quiz.correctIndex && (
-                    <span className="text-[10px] uppercase font-bold text-green-700" id="quiz-badge-correct">Verified</span>
+                    <span className="text-[10px] uppercase font-bold text-green-700" id="quiz-badge-correct">
+                      {bilingualMode ? "Correto / Verified" : "Verified"}
+                    </span>
                   )}
                   {quizSubmitted && selectedQuizIndex === index && index !== currentDialogue.quiz.correctIndex && (
-                    <span className="text-[10px] uppercase font-bold text-red-700" id="quiz-badge-incorrect">Refused Draft</span>
+                    <span className="text-[10px] uppercase font-bold text-red-700" id="quiz-badge-incorrect">
+                      {bilingualMode ? "Incorreto / Refused" : "Refused Draft"}
+                    </span>
                   )}
                 </button>
               ))}
@@ -297,7 +311,7 @@ export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) 
                 onClick={handleSubmitQuiz}
                 className="w-full bg-indigo-600 hover:bg-indigo-700 transition-colors text-white py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer shadow-xs"
               >
-                Submit Comprehension Answer
+                {bilingualMode ? "Submeter Resposta / Submit Answer" : "Submit Comprehension Answer"}
               </button>
             )}
 
@@ -314,11 +328,15 @@ export default function ListeningPractice({ onEarnXp }: ListeningPracticeProps) 
                     <Volume2 className="w-4.5 h-4.5 text-red-650" id="diag-fail-icon" />
                   )}
                   <h5 className="font-bold text-xs" id="dial-feedback-title">
-                    {answeredCorrectly ? 'Comprehensive Pass! (+30 XP)' : 'Comprehension Failed'}
+                    {answeredCorrectly 
+                      ? bilingualMode ? 'Gabarito Correto! / Comprehensive Pass! (+30 XP)' : 'Comprehensive Pass! (+30 XP)'
+                      : bilingualMode ? 'Falha na Compreensão / Comprehension Failed' : 'Comprehension Failed'}
                   </h5>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed" id="dial-feedback-explanation">
-                  <span className="font-semibold text-slate-800" id="dial-ex-pfx">Explanation:</span> {currentDialogue.quiz.explanation}
+                  <span className="font-semibold text-slate-800" id="dial-ex-pfx">
+                    {bilingualMode ? "Explicação / Explanation:" : "Explanation:"}
+                  </span> {currentDialogue.quiz.explanation}
                 </p>
               </div>
             )}

@@ -10,6 +10,7 @@ import { Sparkles, Edit3, Send, CheckCircle2, ChevronRight, Award, AlertCircle, 
 
 interface WritingPracticeProps {
   onEarnXp: (amount: number) => void;
+  bilingualMode?: boolean;
 }
 
 interface EvaluationResult {
@@ -24,7 +25,7 @@ interface EvaluationResult {
   politeRewrite: string;
 }
 
-export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
+export default function WritingPractice({ onEarnXp, bilingualMode = true }: WritingPracticeProps) {
   const [challenges] = useState<WritingChallenge[]>(sampleWritingChallenges);
   const [activeChallengeId, setActiveChallengeId] = useState<string>(sampleWritingChallenges[0].id);
   const [userText, setUserText] = useState<string>('');
@@ -178,17 +179,26 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
       {/* Sidebar: Writing Challenges Menu */}
       <div className="lg:col-span-4 space-y-4" id="writing-sidebar">
         
-        {/* PM Rationale */}
-        <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-4 flex gap-3 items-start" id="writing-pm-ratio">
-          <div className="w-8 h-8 rounded-full bg-indigo-650 text-indigo-700 bg-indigo-100 flex items-center justify-center font-bold shrink-0 shadow-xs" id="writing-pm-avatar">
-            S
+        {/* AI Writing Guide Introduction */}
+        <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-4 flex gap-3 items-start animate-fade-in" id="writing-pm-ratio">
+          <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold shrink-0 shadow-xs text-sm" id="writing-pm-avatar">
+            ✏️
           </div>
           <div>
             <h4 className="text-xs font-bold text-indigo-800 uppercase tracking-wider" id="writing-pm-brand">
-              Busuu AI Writing Evaluator
+              {bilingualMode ? "Oficina de Escrita Prática / AI Writing Studio" : "Oficina de Escrita Prática (Tutor IA)"}
             </h4>
-            <p className="text-xs text-indigo-700/90 mt-1 leading-relaxed" id="writing-pm-rationale">
-              "We leverage server-side Gemini LLM models and high-quality Pt-Pt system rules. The artificial intelligence evaluates, grades, and corrections grammatical shifts." <span className="font-semibold">— Sofia, PM</span>
+            <p className="text-xs text-indigo-707 mt-1 leading-relaxed" id="writing-pm-rationale">
+              {bilingualMode ? (
+                <>
+                  Escreva pequenos textos práticos para o quotidiano em Portugal (como mensagens para senhorio ou atestados). O nosso motor de inteligência artificial analisa a sua sintaxe!
+                  <span className="block mt-1 text-slate-500 text-[11px] border-t border-indigo-200/50 pt-1 font-medium italic">
+                    Draft real-world European Portuguese correspondence (e.g., messages to landlords). Our AI checks spelling, pronouns, and polite formal syntax.
+                  </span>
+                </>
+              ) : (
+                "Escreva pequenos textos práticos para o quotidiano em Portugal (como mensagens para senhorio ou atestados). O nosso motor de inteligência artificial analisa a sua sintaxe de acordo com o Acordo Ortográfico de 1990!"
+              )}
             </p>
           </div>
         </div>
@@ -196,7 +206,7 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
         {/* Challenges list */}
         <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-2.5" id="challenges-card">
           <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" id="challenges-header">
-            Active Writing Assignments
+            {bilingualMode ? "Tarefas de Escrita / Active Assignments" : "Active Writing Assignments"}
           </h3>
           {challenges.map((c) => (
             <button
@@ -231,7 +241,9 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
               {currentChallenge.title}
             </h2>
             <p className="text-xs text-slate-500 mt-2.5 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100 font-medium" id="ch-scenario">
-              <span className="font-bold text-slate-700 block text-[11px] mb-1 uppercase tracking-wider">Scenario Narrative:</span>
+              <span className="font-bold text-slate-700 block text-[11px] mb-1 uppercase tracking-wider">
+                {bilingualMode ? "A Situação Narrativa / Scenario Narrative:" : "Scenario Narrative:"}
+              </span>
               {currentChallenge.scenario}
             </p>
           </div>
@@ -239,7 +251,7 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
           {/* User Writing Prompt */}
           <div className="space-y-2" id="writing-prompt-text-block">
             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider" id="prompt-label">
-              Assignment Directive
+              {bilingualMode ? "Diretiva da Tarefa / Assignment Directive" : "Assignment Directive"}
             </h4>
             <p className="text-xs text-slate-700 font-semibold leading-relaxed" id="ch-prompt-directive">
               {currentChallenge.prompt}
@@ -249,7 +261,7 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
           {/* Word assist box */}
           <div className="space-y-2" id="vocabulary-aid-box">
             <span className="text-[10px] uppercase font-bold text-indigo-500 tracking-wider block" id="vocab-aid-label">
-              In-Context Vocabulary Recommendations
+              {bilingualMode ? "Recomendações de Vocabulário Útil / Recommended Vocabulary" : "In-Context Vocabulary Recommendations"}
             </span>
             <div className="flex flex-wrap gap-1.5" id="vocab-recommendation-chips">
               {currentChallenge.helpfulWords.map((word, idx) => (
@@ -270,20 +282,24 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
             <div className="flex justify-between items-center" id="draft-labels-row">
               <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1" id="draft-label">
                 <Edit3 className="w-4 h-4 text-slate-400" id="edit-draft-icon" />
-                Submit Your Portuguese Draft
+                {bilingualMode ? "Submeter Rascunho em Português / Your Draft" : "Submit Your Portuguese Draft"}
               </label>
               <button
                 id="toggle-ref-btn"
                 onClick={() => setShowReference(!showReference)}
                 className="text-[11px] text-indigo-650 hover:text-indigo-800 font-bold underline transition-colors cursor-pointer"
               >
-                {showReference ? 'Close Reference' : 'Load Model Outline'}
+                {showReference 
+                  ? bilingualMode ? "Ocultar Referência / Hide Outline" : "Close Reference"
+                  : bilingualMode ? "Revelar Modelo Nativo / Load Model Outline" : "Load Model Outline"}
               </button>
             </div>
 
             {showReference && (
               <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-xl space-y-1" id="reference-card">
-                <span className="text-[10px] uppercase font-bold text-indigo-700 block" id="ref-label-header">Model Native Draft</span>
+                <span className="text-[10px] uppercase font-bold text-indigo-700 block" id="ref-label-header">
+                  {bilingualMode ? "Modelo Escrito Recomendado / Recommended Native Reference" : "Model Native Draft"}
+                </span>
                 <p className="font-mono text-xs text-indigo-900 leading-relaxed whitespace-pre-wrap" id="ref-text">
                   {currentChallenge.referenceExample}
                 </p>
@@ -309,12 +325,12 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" id="spin-loader" />
-                    Analyzing Syntax...
+                    {bilingualMode ? "Gabaritando Sintaxe... / Analyzing..." : "Analyzing Syntax..."}
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-4 h-4" id="sparkles-action" />
-                    Submit for AI Evaluation
+                    {bilingualMode ? "Avaliar Texto com IA / Submit for AI Evaluation" : "Submit for AI Evaluation"}
                   </>
                 )}
               </button>
@@ -351,7 +367,9 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4" id="score-block-grid">
                 
                 <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 text-center flex flex-col justify-center items-center space-y-1" id="overall-score-card">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider" id="overall-score-title">Accuracy Score</span>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider" id="overall-score-title">
+                    {bilingualMode ? "Pontuação de Precisão / Accuracy Score" : "Accuracy Score"}
+                  </span>
                   <p className={`text-4xl font-bold tracking-tight ${evalResult.score >= 80 ? 'text-green-600' : 'text-amber-500'}`} id="overall-score-val">
                     {evalResult.score}/100
                   </p>
@@ -361,7 +379,9 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
                 </div>
 
                 <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 text-center flex flex-col justify-center items-center space-y-1" id="cefr-grade-card">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider" id="overall-grade-title">Demonstrated CEFR</span>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider" id="overall-grade-title">
+                    {bilingualMode ? "Nível Demonstrado / Demonstrated CEFR" : "Demonstrated CEFR"}
+                  </span>
                   <span className="text-3xl font-extrabold text-indigo-600" id="overall-grade-val">
                     {evalResult.grade}
                   </span>
@@ -371,7 +391,9 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
                 </div>
 
                 <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-5 flex flex-col justify-center space-y-1" id="ai-verdict-card">
-                  <span className="text-[10px] uppercase font-bold text-indigo-700 tracking-wider" id="tutor-label-header">AI Tutor Evaluation</span>
+                  <span className="text-[10px] uppercase font-bold text-indigo-700 tracking-wider" id="tutor-label-header">
+                    {bilingualMode ? "Parecer do Tutor IA / AI Evaluation" : "AI Tutor Evaluation"}
+                  </span>
                   <p className="text-xs text-slate-600 leading-relaxed line-clamp-3 italic" id="feedback-desc">
                     "{evalResult.generalFeedback}"
                   </p>
@@ -383,28 +405,34 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
                 <div className="space-y-3.5" id="grammar-corrections-section">
                   <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5" id="corrections-header">
                     <AlertCircle className="w-4 h-4 text-amber-500" id="alert-icon-info" />
-                    Linguistic Corrections & Orthography Rules
+                    {bilingualMode ? "Relatório de Correções Linguísticas / Corrections & Rules" : "Linguistic Corrections & Orthography Rules"}
                   </h4>
 
                   <div className="space-y-3" id="corrections-items-scroller">
                     {evalResult.corrections.map((corr, idx) => (
                       <div key={idx} className="bg-slate-50 border border-slate-150 p-4.5 rounded-2xl space-y-2.5" id={`correction-item-${idx}`}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3" id={`correction-comparison-grid-${idx}`}>
-                          <div className="space-y-1" id={`incorrect-block-${idx}`}>
-                            <span className="text-[9px] uppercase font-bold text-red-500" id={`incorrect-lbl-${idx}`}>Your Submission</span>
+                           <div className="space-y-1" id={`incorrect-block-${idx}`}>
+                            <span className="text-[9px] uppercase font-bold text-red-500" id={`incorrect-lbl-${idx}`}>
+                              {bilingualMode ? "O Seu Rascunho / Your Submission" : "Your Submission"}
+                            </span>
                             <p className="text-xs font-mono font-medium text-red-900 bg-red-50/30 rounded px-2 py-1 line-through" id={`incorrect-text-${idx}`}>
                               {corr.incorrect}
                             </p>
                           </div>
                           <div className="space-y-1" id={`correct-block-${idx}`}>
-                            <span className="text-[9px] uppercase font-bold text-green-700" id={`correct-lbl-${idx}`}>Portugal Habit (Standard)</span>
+                            <span className="text-[9px] uppercase font-bold text-green-700" id={`correct-lbl-${idx}`}>
+                              {bilingualMode ? "Hábito de Portugal (Padrão) / European Portuguese Standard" : "Portugal Habit (Standard)"}
+                            </span>
                             <p className="text-xs font-mono font-medium text-green-900 bg-green-50/30 rounded px-2 py-1" id={`correct-text-${idx}`}>
                               {corr.correct}
                             </p>
                           </div>
                         </div>
-                        <p className="text-xs text-slate-605 leading-relaxed pt-1.5 border-t border-slate-200/50" id={`explanation-text-${idx}`}>
-                          <span className="font-semibold text-slate-700" id={`exp-pfx-${idx}`}>Rule explanation:</span> {corr.explanation}
+                        <p className="text-xs text-slate-650 leading-relaxed pt-1.5 border-t border-slate-200/50" id={`explanation-text-${idx}`}>
+                          <span className="font-semibold text-slate-700" id={`exp-pfx-${idx}`}>
+                            {bilingualMode ? "Explicação da Regra / Rule Description:" : "Rule explanation:"}
+                          </span> {corr.explanation}
                         </p>
                       </div>
                     ))}
@@ -417,7 +445,7 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
                 <div className="flex items-center gap-2 border-b border-indigo-900 pb-2.5" id="rewrite-header">
                   <CheckCircle2 className="w-4.5 h-4.5 text-emerald-400" id="emerald-check-icon" />
                   <h4 className="text-[10px] uppercase font-bold tracking-wider text-indigo-300" id="rewrite-title">
-                    Perfect European Portuguese Form (Polite Rewrite)
+                    {bilingualMode ? "Proposta de Reescrita Polida / Polite Native Rewrite" : "Perfect European Portuguese Form (Polite Rewrite)"}
                   </h4>
                 </div>
                 <div className="p-3 bg-indigo-900/40 rounded-xl border border-indigo-900/50" id="rewrite-box">
@@ -426,7 +454,9 @@ export default function WritingPractice({ onEarnXp }: WritingPracticeProps) {
                   </p>
                 </div>
                 <p className="text-[10px] text-slate-400 leading-normal" id="rewrite-disclaimer">
-                  This rewrite conforms to standard administrative etiquette in Portugal. It incorporates the correct 1990 Orthographic structures and preserves a highly respectful spacing tone.
+                  {bilingualMode 
+                    ? "Esta reescrita respeita estritamente o protocolo social e a etiqueta corporativa tradicional portuguesa corrente em Lisboa ou Porto."
+                    : "This rewrite conforms to standard administrative etiquette in Portugal. It incorporates the correct 1990 Orthographic structures and preserves a highly respectful spacing tone."}
                 </p>
               </div>
 

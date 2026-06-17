@@ -8,6 +8,7 @@ import { Mic, MicOff, Volume2, CheckCircle2, RefreshCw, Star, AlertCircle } from
 
 interface SpeakingPracticeProps {
   onEarnXp: (amount: number) => void;
+  bilingualMode?: boolean;
 }
 
 interface SpeakingPhrase {
@@ -24,27 +25,25 @@ const challengePhrases: SpeakingPhrase[] = [
     phrase: 'Queria uma bica e um pastel de nata, por favor.',
     english: 'I would like an espresso and a custard tart, please.',
     phonetic: 'Kree-ah oo-mah bee-cah ee oom pash-tel d\'na-ta, poor fah-voor',
-    tip: 'The word "pastel" is pronounced "pash-tel" due to the Portuguese "s" which turns to a "sh" sound when followed by a consonant.'
+    tip: 'O termo "pastel" pronuncia-se "pash-tel" devido ao "s" português que se transforma num som "sh" quando seguido por consoante. ("pastel" is pronounced "pash-tel" due to the Portuguese "s" turning to "sh" before consonants).'
   },
   {
     id: 'speak_2',
     phrase: 'Onde fica a Junta de Freguesia?',
     english: 'Where is the civil parish council?',
     phonetic: 'On-deh fee-cah ah Joon-tah deh freh-gheh-zee-ah',
-    tip: 'Note the "g" in Freguesia is a hard "g" like in "gate", and the ' +
-       '"s" sounds like a "z", i.e. "gheh-zee-ah". Avoid the Brazilian pronunciation of "de" as "chee".'
+    tip: 'Note que o "g" em Freguesia é um "g" duro (como em "gato"), e o "s" soa como "z", i.e., "gheh-zee-ah". Evite pronunciar "de" como "chee" (Evade Brazilian "de" -> "chee").'
   },
   {
     id: 'speak_3',
     phrase: 'Bom dia, mudei a minha morada fiscal ontem.',
     english: 'Good morning, I updated my fiscal address yesterday.',
     phonetic: 'Bõ dee-ah, moo-dey ah mee-nyah moo-rah-dah fees-cal on-tem',
-    tip: 'In PT-PT, "de" in "mudei" is a quick "deh", very consolidated. Dial down your vowels ' +
-       'and pronounce "ontem" as a nasalized "on-temm" with a silent ending.'
+    tip: 'Em Portugal, o "de" em "mudei" é extremamente curto ("deh"). Reduza as vogais átonas e pronuncie "ontem" de forma nasalizada ("on-temm") com término silencioso.'
   }
 ];
 
-export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
+export default function SpeakingPractice({ onEarnXp, bilingualMode = true }: SpeakingPracticeProps) {
   const [activePhraseIdx, setActivePhraseIdx] = useState<number>(0);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [speechFeedback, setSpeechFeedback] = useState<{
@@ -89,8 +88,12 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
         score: mockScore,
         textMatched: currentPhrase.phrase,
         prosodyAdvice: mockScore >= 92 
-          ? 'Exceptional accent reduction! Your vowel elongation has correct European stress-timed properties.' 
-          : 'Good effort! Focus on contracting the vowel in the syllables, and turning "s" to a "sh" sound.',
+          ? bilingualMode 
+            ? 'Ritmo silábico excecional! Mostrou uma excelente redução vocálica adequada a Portugal. / Exceptional accent!' 
+            : 'Exceptional accent reduction! Your vowel elongation has correct European stress-timed properties.' 
+          : bilingualMode 
+            ? 'Bom esforço! Lembre-se de omitir a vogal átona nas sílabas e fazer o "s" soprado como "sh". / Focus on reducing unstressed vowels.' 
+            : 'Good effort! Focus on contracting the vowel in the syllables, and turning "s" to a "sh" sound.',
         success: isSuccess
       });
 
@@ -106,17 +109,26 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
   return (
     <div className="space-y-6" id="speaking-engine-root">
       
-      {/* Intro Banner */}
-      <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-4 flex gap-3 items-start" id="speaking-intro-panel">
-        <div className="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold shrink-0 shadow-xs animate-bounce" id="speaking-pm-avatar">
-          M
+      {/* Accent Coach Guidance */}
+      <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-4 flex gap-3 items-start animate-fade-in" id="speaking-intro-panel">
+        <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shrink-0 shadow-xs text-sm" id="speaking-pm-avatar">
+          🗣️
         </div>
         <div>
           <h4 className="text-xs font-bold text-amber-800 uppercase tracking-wider" id="speaking-pm-brand">
-            Memrise-Style Accent reduction coach
+            {bilingualMode ? "Treino de Redução de Sotaque / Accent Reduction Practice" : "Treino de Redução de Sotaque (Pronúncia)"}
           </h4>
-          <p className="text-xs text-amber-700/90 mt-1 leading-relaxed" id="speaking-pm-rationale">
-            "European Portuguese is stress-timed, leading to extreme vowel reduction. Beginners often overuse vowels—which sounds Brazilian. Speak clearly and abbreviate unstressed syllables!" <span className="font-semibold">— Marcos, PM</span>
+          <p className="text-xs text-amber-705 mt-1 leading-relaxed" id="speaking-pm-rationale">
+            {bilingualMode ? (
+              <>
+                O som do Português Europeu baseia-se num ritmo de tempo acentuado (stress-timed), com forte redução das vogais átonas. Evite abrir as vogais excessivamente para falar de forma natural.
+                <span className="block mt-1 text-slate-500 text-[11px] border-t border-amber-200/50 pt-1 font-medium italic">
+                  European Portuguese uses a stress-timed rhythm with significant vowel reduction. Avoid over-opening unstressed vowels to develop a natural, native accent.
+                </span>
+              </>
+            ) : (
+              "O som do Português Europeu baseia-se num ritmo de tempo acentuado (stress-timed), com forte redução das vogais átonas. Evite abrir excessivamente as vogais para obter um sotaque português natural e integrado."
+            )}
           </p>
         </div>
       </div>
@@ -125,10 +137,12 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
         
         {/* Phase progress indicator */}
         <div className="flex justify-between items-center text-xs text-slate-400 font-mono" id="progress-indicator">
-          <span id="phrase-index-tracker">Task {activePhraseIdx + 1} of {challengePhrases.length}</span>
+          <span id="phrase-index-tracker">
+            {bilingualMode ? `Tarefa ${activePhraseIdx + 1} de ${challengePhrases.length} / Task ${activePhraseIdx + 1} of ${challengePhrases.length}` : `Task ${activePhraseIdx + 1} of ${challengePhrases.length}`}
+          </span>
           <span className="text-amber-600 bg-amber-50 font-bold px-2 py-0.5 rounded-full flex items-center gap-1" id="streak-counter">
             <Star className="w-3 text-amber-500 fill-amber-500" />
-            {solvedPhrases.size} Mastered
+            {solvedPhrases.size} {bilingualMode ? "Dominado(s) / Mastered" : "Mastered"}
           </span>
         </div>
 
@@ -138,14 +152,16 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
             id="speak-guideline-btn"
             onClick={() => speakPt(currentPhrase.phrase)}
             className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white border border-slate-150 hover:bg-slate-50 text-indigo-600 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
-            title="Hear perfect pronunciation reference"
+            title={bilingualMode ? "Ouvir referência correta / Hear perfect pronunciation" : "Hear perfect pronunciation reference"}
           >
             <Volume2 className="w-5 h-5" id="guideline-speaker-icon" />
           </button>
 
           <div className="space-y-1.5" id="phrase-text-block">
-            <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Pronounce this Sentence</span>
-            <p className="text-lg font-bold text-slate-800 leading-normal" id="pt-phrase-text">
+            <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+              {bilingualMode ? "Pronuncie esta Frase / Pronounce this Sentence" : "Pronounce this Sentence"}
+            </span>
+            <p className="text-lg font-bold text-slate-805 leading-normal" id="pt-phrase-text">
               {currentPhrase.phrase}
             </p>
             <p className="text-[11px] text-slate-500 italic" id="en-phrase-translation">
@@ -154,8 +170,10 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
           </div>
 
           <div className="pt-2 border-t border-slate-200/50 space-y-1" id="phonetic-advice-block">
-            <span className="text-[9px] uppercase font-bold text-amber-500 tracking-wider block">Phonetic guide</span>
-            <p className="font-mono text-xs text-slate-600 font-bold" id="phonetic-text">
+            <span className="text-[9px] uppercase font-bold text-amber-500 tracking-wider block">
+              {bilingualMode ? "Guia Fonético / Phonetic Guide" : "Phonetic guide"}
+            </span>
+            <p className="font-mono text-xs text-slate-650 font-bold" id="phonetic-text">
               [{currentPhrase.phonetic}]
             </p>
           </div>
@@ -164,8 +182,10 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
         {/* Tip Box */}
         <div className="p-4 bg-indigo-50/40 rounded-2xl border border-indigo-100/50 flex gap-2 items-start" id="accent-reduction-tip-box">
           <AlertCircle className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" id="tip-info" />
-          <p className="text-[11px] text-indigo-805 text-slate-600 leading-normal" id="tip-detail">
-            <span className="font-bold text-indigo-900">Locational Accent Advice:</span> {currentPhrase.tip}
+          <p className="text-[11px] text-slate-600 leading-normal text-left" id="tip-detail">
+            <span className="font-bold text-indigo-900">
+              {bilingualMode ? "Conselho de Sotaque de Portugal / Locational Accent Advice:" : "Locational Accent Advice:"}
+            </span> {currentPhrase.tip}
           </p>
         </div>
 
@@ -181,8 +201,12 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
                 <RefreshCw className="w-6 h-6 animate-spin" id="spin-rec-icon" />
               </button>
               <div className="text-center" id="recording-active-labels">
-                <span className="text-xs font-bold text-red-500 uppercase tracking-widest block animate-pulse">Recording Active</span>
-                <span className="text-[10px] text-slate-400 font-mono">Speak clearly into your microphone now...</span>
+                <span className="text-xs font-bold text-red-500 uppercase tracking-widest block animate-pulse">
+                  {bilingualMode ? "Gravação Activa / Recording Active" : "Recording Active"}
+                </span>
+                <span className="text-[10px] text-slate-400 font-mono">
+                  {bilingualMode ? "Fale claramente para o seu microfone agora... / Speak clearly..." : "Speak clearly into your microphone now..."}
+                </span>
               </div>
             </div>
           ) : (
@@ -195,14 +219,16 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
               >
                 <Mic className="w-6 h-6" id="mic-icon" />
               </button>
-              <span className="text-xs font-bold text-slate-600" id="tap-mic-label">Tap to Record Speaking</span>
+              <span className="text-xs font-bold text-slate-600" id="tap-mic-label">
+                {bilingualMode ? "Toque para Gravar a Voz / Click to Record" : "Tap to Record Speaking"}
+              </span>
             </div>
           )}
         </div>
 
         {/* Feedback block */}
         {speechFeedback && (
-          <div className={`p-5 rounded-2xl border space-y-2.5 animate-fade-in ${
+          <div className={`p-5 rounded-2xl border space-y-2.5 animate-fade-in relative z-10 ${
             speechFeedback.success 
               ? 'bg-green-50/20 border-green-150' 
               : 'bg-amber-50/20 border-amber-100'
@@ -215,16 +241,20 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
                   <AlertCircle className="w-5 h-5 text-amber-600" />
                 )}
                 <h5 className="font-bold text-xs text-slate-800" id="prosody-grade-title">
-                  {speechFeedback.success ? 'Speaking Quest Accept! (+20 XP)' : 'Needs Practice'}
+                  {speechFeedback.success 
+                    ? bilingualMode ? 'Desafio Superado! / Pronunciation Quest Accepted! (+20 XP)' : 'Speaking Quest Accept! (+20 XP)'
+                    : bilingualMode ? 'Necessita de Treino / Needs Practice' : 'Needs Practice'}
                 </h5>
               </div>
               <span className={`text-sm font-extrabold ${speechFeedback.success ? 'text-green-600' : 'text-amber-600'}`} id="prosody-score">
-                Match: {speechFeedback.score}%
+                {bilingualMode ? "Correspondência / Match" : "Match"}: {speechFeedback.score}%
               </span>
             </div>
 
-            <p className="text-xs text-slate-650 leading-relaxed border-t border-slate-100 pt-2" id="prosody-advice-text">
-              <span className="font-semibold text-slate-700">Coach Feedback:</span> {speechFeedback.prosodyAdvice}
+            <p className="text-xs text-slate-650 leading-relaxed border-t border-slate-100 pt-2 text-left" id="prosody-advice-text">
+              <span className="font-semibold text-slate-700">
+                {bilingualMode ? "Comentário do Treinador / Coach Feedback:" : "Coach Feedback:"}
+              </span> {speechFeedback.prosodyAdvice}
             </p>
 
             <div className="flex justify-end pt-1" id="next-phrase-dock">
@@ -236,7 +266,7 @@ export default function SpeakingPractice({ onEarnXp }: SpeakingPracticeProps) {
                 }}
                 className="bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors text-slate-700 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"
               >
-                Load Next Phrase
+                {bilingualMode ? "Seguinte / Load Next Phrase" : "Load Next Phrase"}
               </button>
             </div>
           </div>

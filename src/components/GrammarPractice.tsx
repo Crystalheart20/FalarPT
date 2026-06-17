@@ -10,9 +10,10 @@ import { ShieldAlert, CheckCircle, Award, HelpCircle, BookOpen, AlertCircle } fr
 
 interface GrammarPracticeProps {
   onEarnXp: (amount: number) => void;
+  bilingualMode?: boolean;
 }
 
-export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
+export default function GrammarPractice({ onEarnXp, bilingualMode = true }: GrammarPracticeProps) {
   const [selectedRuleId, setSelectedRuleId] = useState<string>(sampleGrammarRules[0].id);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
   const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
@@ -59,17 +60,26 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
       
       {/* Sidebar: Lesson Selector */}
       <div className="lg:col-span-4 space-y-4" id="grammar-sidebar">
-        {/* PM Rationale */}
-        <div className="bg-sky-50/50 border border-sky-100 rounded-2xl p-4 flex gap-3 items-start" id="grammar-pm-rationale-panel">
-          <div className="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center shrink-0 font-bold shadow-xs" id="grammar-pm-avatar">
-            C
+        {/* Grammar Guide Intro */}
+        <div className="bg-sky-50/50 border border-sky-100 rounded-2xl p-4 flex gap-3 items-start animate-fade-in" id="grammar-pm-rationale-panel">
+          <div className="w-8 h-8 rounded-xl bg-sky-600 text-white flex items-center justify-center shrink-0 font-bold shadow-xs text-sm" id="grammar-pm-avatar">
+            ✍️
           </div>
           <div>
             <h4 className="text-xs font-bold text-sky-800 uppercase tracking-wider" id="grammar-pm-brand">
-              Babbel-Style Structural Coaching
+              {bilingualMode ? "Estudo de Estruturas Gramaticais / Grammar Drills" : "Estudo de Estruturas Gramaticais"}
             </h4>
-            <p className="text-xs text-sky-700/90 mt-1 leading-relaxed" id="grammar-explanation-rationale">
-              "Expats cannot depend on intuition alone. We present European Portuguese grammatical frameworks in clean, academic, side-by-side modules with Brazilian alternatives." <span className="font-semibold">— Clara Schmidt, PM</span>
+            <p className="text-xs text-sky-705 mt-1 leading-relaxed" id="grammar-explanation-rationale">
+              {bilingualMode ? (
+                <>
+                  O Português Europeu possui regras gramaticais e estruturas de pronomes muito específicas. Pratique a colocação correta de pronomes (ênclise) e evite padrões brasileiros!
+                  <span className="block mt-1 text-slate-500 text-[11px] border-t border-sky-200/50 pt-1 font-medium italic">
+                    European Portuguese uses very strict clitic pronoun ordering (enclisis/mesoclisis rules). Train correct structural choices and spot key contrasts from Brazilian habits.
+                  </span>
+                </>
+              ) : (
+                "O Português Europeu possui regras gramaticais e estruturas de pronomes muito específicas. Pratique a colocação correta de pronomes e entenda as diferenças cruciais em relação à sintaxe brasileira para obter confiança e falar de forma natural."
+              )}
             </p>
           </div>
         </div>
@@ -77,7 +87,7 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
         {/* Lesson List */}
         <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-2.5" id="grammar-lessons-list">
           <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" id="lessons-list-title">
-            Grammar Units
+            {bilingualMode ? "Unidades de Gramática / Grammar Units" : "Grammar Units"}
           </h3>
           {sampleGrammarRules.map((rule) => (
             <button
@@ -122,9 +132,9 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
               </h2>
             </div>
             {solvedRuleIds.has(currentRule.id) && (
-              <span className="flex items-center gap-1 bg-green-50 text-green-700 text-xs px-2.5 py-1 rounded-full border border-green-200 font-bold" id="badge-mastered-xp">
+              <span className="flex items-center gap-1 bg-green-50 text-green-700 text-xs px-2.5 py-1 rounded-full border border-green-200 font-bold font-semibold" id="badge-mastered-xp">
                 <CheckCircle className="w-4 h-4" id="check-icon-master" />
-                Solved (+25 XP)
+                {bilingualMode ? "Resolvido! / Solved (+25 XP)" : "Solved (+25 XP)"}
               </span>
             )}
           </div>
@@ -133,7 +143,7 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
           <div className="space-y-3" id="lesson-concept-block">
             <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400 flex items-center gap-1.5" id="concept-label">
               <BookOpen className="w-4 h-4 text-sky-500" id="reading-icon" />
-              Pedagogical Grammar Concept
+              {bilingualMode ? "Conceito Pedagógico Gramatical / Grammar Theory Concept" : "Pedagogical Grammar Concept"}
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed" id="concept-description">
               {currentRule.description}
@@ -143,13 +153,17 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
           {/* European vs Brazilian Comparison Card */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4" id="dialect-comparison-grid">
             <div className="bg-sky-50/30 border border-sky-100 rounded-2xl p-4.5 space-y-1.5" id="pt-pt-concept-card">
-              <span className="text-[10px] uppercase font-bold text-sky-700 block" id="concept-label-ptpt">Portugal Standard (PT-PT)</span>
+              <span className="text-[10px] uppercase font-bold text-sky-700 block" id="concept-label-ptpt">
+                {bilingualMode ? "Uso de Portugal (Padrão) / PT-PT Standard" : "Portugal Standard (PT-PT)"}
+              </span>
               <p className="font-mono text-xs font-semibold text-sky-900" id="concept-val-ptpt">
                 {currentRule.europeanConcept}
               </p>
             </div>
             <div className="bg-rose-50/20 border border-rose-100/50 rounded-2xl p-4.5 space-y-1.5" id="pt-br-concept-card">
-              <span className="text-[10px] uppercase font-bold text-rose-700 block" id="concept-label-ptbr">Brazilian Shift (PT-BR)</span>
+              <span className="text-[10px] uppercase font-bold text-rose-700 block" id="concept-label-ptbr">
+                {bilingualMode ? "Variante do Brasil (Contraste) / PT-BR Contrast" : "Brazilian Shift (PT-BR)"}
+              </span>
               <p className="font-mono text-xs font-semibold text-rose-950/80" id="concept-val-ptbr">
                 {currentRule.brazilianContrast}
               </p>
@@ -159,7 +173,7 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
           {/* Model Examples */}
           <div className="space-y-3" id="lesson-examples-section">
             <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400" id="examples-label">
-              Standard PT-PT Examples
+              {bilingualMode ? "Exemplos Padrão em Portugal / Standard PT-PT Examples" : "Standard PT-PT Examples"}
             </h3>
             <div className="space-y-2.5" id="examples-cards">
               {currentRule.examples.map((ex, index) => (
@@ -171,19 +185,17 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
                     {ex.en}
                   </p>
                   <span className="inline-block mt-2 text-[10px] text-indigo-600 bg-indigo-50/60 font-medium px-2 py-0.5 rounded-md" id={`example-context-${index}`}>
-                    Context: {ex.context}
+                    {bilingualMode ? `Contexto / Context: ${ex.context}` : `Context: ${ex.context}`}
                   </span>
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Interactive Lesson Quiz */}
+               {/* Interactive Lesson Quiz */}
           <div className="bg-slate-50/80 p-5 rounded-3xl border border-slate-100 space-y-4" id="lesson-quiz-panel">
             <div className="flex items-center gap-1.5" id="quiz-header-layout">
               <HelpCircle className="w-4.5 h-4.5 text-indigo-500" id="quiz-badge-icon" />
               <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400" id="quiz-header-label">
-                Interactive Concept Check
+                {bilingualMode ? "Questão de Verificação Prática / Concept Check" : "Interactive Concept Check"}
               </h4>
             </div>
 
@@ -207,15 +219,19 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
                           : 'border-slate-100 bg-white text-slate-400'
                       : selectedOptionIndex === index
                         ? 'border-indigo-400 bg-indigo-50/30 text-indigo-900 ring-2 ring-indigo-500/10'
-                        : 'border-slate-200 bg-white hover:bg-slate-100/30 text-slate-700 cursor-pointer'
+                        : 'border-slate-200 bg-white hover:bg-slate-100/30 text-slate-705 cursor-pointer'
                   }`}
                 >
                   <span id={`quiz-option-text-${index}`}>{opt}</span>
                   {quizSubmitted && index === currentRule.quiz.correctIndex && (
-                    <span className="text-[10px] uppercase font-bold text-green-700" id="quiz-badge-correct">Correct Choice</span>
+                    <span className="text-[10px] uppercase font-bold text-green-700" id="quiz-badge-correct">
+                      {bilingualMode ? "Gabarito Correto / Correct" : "Correct Choice"}
+                    </span>
                   )}
                   {quizSubmitted && selectedOptionIndex === index && index !== currentRule.quiz.correctIndex && (
-                    <span className="text-[10px] uppercase font-bold text-red-700" id="quiz-badge-incorrect">Your Draft</span>
+                    <span className="text-[10px] uppercase font-bold text-red-700" id="quiz-badge-incorrect">
+                      {bilingualMode ? "Erro / Submission mistake" : "Your Draft"}
+                    </span>
                   )}
                 </button>
               ))}
@@ -228,41 +244,45 @@ export default function GrammarPractice({ onEarnXp }: GrammarPracticeProps) {
                 onClick={handleSubmitQuiz}
                 className="w-full bg-indigo-600 hover:bg-indigo-700 transition-colors text-white py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-xs cursor-pointer"
               >
-                Validate Answer
+                {bilingualMode ? "Validar Solução / Validate Answer" : "Validate Answer"}
               </button>
             )}
 
             {quizSubmitted && (
               <div className={`p-4 rounded-2xl border space-y-2 ${
                 answeredCorrectly 
-                  ? 'bg-green-50/30 border-green-100 text-green-900' 
-                  : 'bg-red-50/30 border-red-100 text-red-900'
+                  ? 'bg-green-50/30 border-green-105 bg-green-50/30 border-green-100 text-green-900' 
+                  : 'bg-red-50/30 border-red-105 bg-red-50/30 border-red-100 text-red-900'
               }`} id="quiz-feedback-box">
                 <div className="flex items-center gap-1.5" id="feedback-grade-block">
                   {answeredCorrectly ? (
                     <CheckCircle className="w-4.5 h-4.5 text-green-600" id="feedback-icon-success" />
                   ) : (
-                    <AlertCircle className="w-4.5 h-4.5 text-red-600" id="feedback-icon-fail" />
+                    <AlertCircle className="w-4.5 h-4.5 text-red-650" id="feedback-icon-fail" />
                   )}
                   <h5 className="font-bold text-xs" id="feedback-grade-title">
-                    {answeredCorrectly ? 'Excellent Job! (+25 XP Earned)' : 'Correction Requested'}
+                    {answeredCorrectly 
+                      ? bilingualMode ? 'Gabaritado com Sucesso! / Correct (+25 XP)' : 'Excellent Job! (+25 XP Earned)'
+                      : bilingualMode ? 'Necessita de Correção / Mistake Identified' : 'Correction Requested'}
                   </h5>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed" id="feedback-explanation">
-                  <span className="font-semibold text-slate-800" id="explanation-prefix">Tutor's Note:</span> {currentRule.quiz.explanation}
+                <p className="text-xs text-slate-650 leading-relaxed font-semibold" id="feedback-explanation">
+                  <span className="font-bold text-slate-800" id="explanation-prefix">
+                    {bilingualMode ? "Nota do Tutor IA / Tutor's Note:" : "Tutor's Note:"}
+                  </span> {currentRule.quiz.explanation}
                 </p>
                 <div className="pt-2" id="feedback-actions">
                   <button
                     id="next-lesson-btn"
                     onClick={handleNextLesson}
-                    className="bg-white border border-slate-200 hover:border-slate-300 transition-colors text-slate-700 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"
+                    className="bg-white border border-slate-200 hover:border-slate-300 transition-colors text-slate-705 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"
                   >
-                    Load Next Unit Lesson
+                    {bilingualMode ? "Seguinte Unidade / Load Next Lesson" : "Load Next Unit Lesson"}
                   </button>
                 </div>
               </div>
             )}
-          </div>
+          </div>       </div>
 
         </div>
       </div>

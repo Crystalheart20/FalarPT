@@ -10,9 +10,10 @@ import { Volume2, RefreshCw, Eye, ArrowLeft, ArrowRight, Star, HelpCircle, Check
 
 interface VocabularyPracticeProps {
   onEarnXp: (amount: number) => void;
+  bilingualMode?: boolean;
 }
 
-export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps) {
+export default function VocabularyPractice({ onEarnXp, bilingualMode = true }: VocabularyPracticeProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
@@ -74,16 +75,25 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
   return (
     <div className="space-y-6" id="vocabulary-engine-root">
       {/* Description */}
-      <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-4 flex gap-3 items-start" id="vocab-intro">
-        <div className="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs" id="vocab-pm-avatar">
-          M
+      <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-4 flex gap-3 items-start animate-fade-in" id="vocab-intro">
+        <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs text-sm font-bold" id="vocab-pm-avatar">
+          🇵🇹
         </div>
         <div>
           <h4 className="text-xs font-bold text-amber-800 uppercase tracking-wider" id="vocab-pm-brand">
-            Memrise-Style Spaced Repetition (SRS) Specifications
+            {bilingualMode ? "Treino de Vocabulário Autêntico / Authentic Vocabulary flashcards" : "Treino de Vocabulário Autêntico (Spaced Repetition)"}
           </h4>
-          <p className="text-xs text-amber-700/90 mt-1 leading-relaxed" id="vocab-pm-rationale">
-            "European Portuguese phonetics can be highly opaque. We highlight PT-PT equivalents of Brazilian words to guard against cross-dialect confusion. Click the speaker to hear correct stress-timed consonants." <span className="font-semibold">— Marcos, PM Memrise</span>
+          <p className="text-xs text-amber-705 mt-1 leading-relaxed" id="vocab-pm-rationale">
+            {bilingualMode ? (
+              <>
+                Aprenda as palavras exatas usadas em Portugal. Destacamos as diferenças em relação ao Português do Brasil para evitar equívocos sociais ou burocráticos. Clique no ícone de som para ouvir a pronúncia em Português Europeu (pt-PT).
+                <span className="block mt-1 text-slate-500 text-[11px] border-t border-amber-200/50 pt-1 font-medium italic">
+                  Learn the exact words used in Portugal. We highlight crucial differences from Brazilian Portuguese to prevent social or bureaucratic mistakes. Click the speaker icon to hear the native European Portuguese (pt-PT) audio.
+                </span>
+              </>
+            ) : (
+              "Aprenda as palavras exatas usadas em Portugal. Destacamos as diferenças em relação ao Português do Brasil para evitar equívocos sociais ou burocráticos. Clique no ícone de som para ouvir a pronúncia correta em Português Europeu (pt-PT). Welcome to authentic Portuguese!"
+            )}
           </p>
         </div>
       </div>
@@ -111,19 +121,19 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
       </div>
 
       {filteredList.length === 0 ? (
-        <div className="text-center py-12 text-slate-400 font-medium text-xs" id="vocab-empty-notice">
-          No vocabulary matching this category was loaded.
+        <div className="text-center py-12 text-slate-405 font-medium text-xs" id="vocab-empty-notice">
+          {bilingualMode ? "Nenhum vocabulário correspondente foi carregado. / No matching vocabulary loaded." : "No vocabulary matching this category was loaded."}
         </div>
       ) : (
         <div className="max-w-md mx-auto space-y-6" id="vocab-card-carousel-section">
           {/* Confetti & Stats indicator */}
           <div className="flex items-center justify-between px-2" id="flashcard-stats-display">
             <span className="text-xs text-slate-400 font-mono" id="carousel-indexer">
-              Word {currentIndex + 1} of {filteredList.length}
+              {bilingualMode ? `Palavra ${currentIndex + 1} de ${filteredList.length} / Word ${currentIndex + 1} of ${filteredList.length}` : `Word ${currentIndex + 1} of ${filteredList.length}`}
             </span>
             <span className="flex items-center gap-1 text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full" id="srs-mastery-streak">
               <Star className="w-3.5 h-3.5 fill-amber-500 stroke-amber-500" id="star-icon" />
-              {learnedIds.size} / {sampleVocabularyList.length} Mastered
+              {learnedIds.size} / {sampleVocabularyList.length} {bilingualMode ? "Dominado(s) / Mastered" : "Mastered"}
             </span>
           </div>
 
@@ -146,7 +156,7 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
                     id="audio-speaker-front-btn"
                     onClick={(e) => speakPt(currentWord.portuguese, e)}
                     className="w-10 h-10 rounded-full bg-slate-50 hover:bg-amber-100 hover:text-amber-700 text-slate-500 flex items-center justify-center transition-colors group/speaker cursor-pointer"
-                    title="Click to hear European Portuguese Pronunciation"
+                    title={bilingualMode ? "Clique para ouvir a pronúncia correta / Click to hear European Portuguese Pronunciation" : "Click to hear European Portuguese Pronunciation"}
                   >
                     <Volume2 className="w-5 h-5" id="audio-icon-front" />
                   </button>
@@ -161,10 +171,10 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
                   </p>
                 </div>
 
-                <div className="flex justify-between items-center text-slate-400 border-t border-slate-50 pt-4" id="front-footer-rail">
-                  <span className="text-[10px] flex items-center gap-1 font-semibold text-slate-300" id="tap-instruction-1">
-                    <RefreshCw className="w-3.5 h-3.5 animate-spin-slow" id="spin-refresh-icon" />
-                    Tap Card to Flip
+                <div className="flex justify-between items-center text-slate-450 border-t border-slate-50 pt-4" id="front-footer-rail">
+                  <span className="text-[10px] flex items-center gap-1 font-semibold text-slate-400" id="tap-instruction-1">
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin-slow text-indigo-505" id="spin-refresh-icon" />
+                    {bilingualMode ? "Toque para virar / Tap to Flip" : "Tap Card to Flip"}
                   </span>
                   <button
                     id="front-complete-action-btn"
@@ -176,7 +186,9 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
                     }`}
                   >
                     <Check className="w-3 h-3" id="check-icon-1" />
-                    {learnedIds.has(currentWord.id) ? 'Mastered (+15 XP)' : 'Mark Learned'}
+                    {learnedIds.has(currentWord.id) 
+                      ? bilingualMode ? 'Dominado / Mastered (+15 XP)' : 'Mastered (+15 XP)'
+                      : bilingualMode ? 'Marcar como Aprendido / Mark Learned' : 'Mark Learned'}
                   </button>
                 </div>
               </div>
@@ -185,7 +197,7 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
               <div className="absolute inset-0 bg-slate-900 text-white rounded-3xl p-6 flex flex-col justify-between shadow-md rotate-y-180 backface-hidden" id="card-back-face">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-3" id="card-back-top-rail">
                   <span className="text-[10px] uppercase font-bold tracking-widest text-amber-400" id="card-back-cat-badge">
-                    English Definition
+                    {bilingualMode ? "Tradução de Apoio / English Definition" : "English Definition"}
                   </span>
                   <span className="text-[10px] text-slate-500 font-mono" id="card-back-id">
                     SRS Core Module
@@ -202,10 +214,18 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
                   {currentWord.brazilianContrast && (
                     <div className="bg-slate-800/80 p-2.5 rounded-xl border border-red-500/10 space-y-0.5" id="brazilian-contrast-container">
                       <span className="text-[9px] uppercase font-bold tracking-wider text-red-400 block" id="contrast-header-label">
-                        Brazilian Portuguese Slip
+                        {bilingualMode ? "Alerta de Desvio Brasileiro / Brazilian PT Slip" : "Brazilian Portuguese Slip"}
                       </span>
                       <p className="text-xs text-slate-300 font-medium" id="contrast-body">
-                        Do not say <span className="line-through text-red-300 font-bold">{currentWord.brazilianContrast}</span> in Portugal.
+                        {bilingualMode ? (
+                          <>
+                            Não diga <span className="line-through text-red-300 font-bold">{currentWord.brazilianContrast}</span> em Portugal (termo brasileiro).
+                          </>
+                        ) : (
+                          <>
+                            Do not say <span className="line-through text-red-300 font-bold">{currentWord.brazilianContrast}</span> in Portugal.
+                          </>
+                        )}
                       </p>
                     </div>
                   )}
@@ -217,7 +237,7 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
 
                 <div className="space-y-1 mt-auto" id="back-footer-examples">
                   <span className="text-[9px] uppercase tracking-wider text-slate-500 block font-bold" id="example-title-label">
-                    Usage Example (European PT)
+                    {bilingualMode ? "Frase de Exemplo em Portugal / Usage Example (PT)" : "Usage Example (European PT)"}
                   </span>
                   <p className="text-[11px] font-medium text-slate-300 leading-snug" id="example-pt-box">
                     "{currentWord.examplePt}"
@@ -247,7 +267,7 @@ export default function VocabularyPractice({ onEarnXp }: VocabularyPracticeProps
               className="text-xs font-semibold px-4 py-2 bg-slate-50 hover:bg-slate-100 transition-colors rounded-full text-slate-500 flex items-center gap-1.5 shadow-xs"
             >
               <RefreshCw className="w-4 h-4 text-slate-400" id="hint-spin-icon" />
-              Flip Answer
+              {bilingualMode ? "Virar Cartão / Flip card" : "Flip Answer"}
             </button>
 
             <button

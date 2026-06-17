@@ -18,9 +18,10 @@ interface SandboxContainerProps {
   onEarnXp: (amount: number) => void;
   activeFeatureTab: string;
   setActiveFeatureTab: (tab: string) => void;
+  bilingualMode?: boolean;
 }
 
-export default function SandboxContainer({ onEarnXp, activeFeatureTab, setActiveFeatureTab }: SandboxContainerProps) {
+export default function SandboxContainer({ onEarnXp, activeFeatureTab, setActiveFeatureTab, bilingualMode = true }: SandboxContainerProps) {
   
   const getTabLabel = (tab: string) => {
     switch (tab) {
@@ -66,22 +67,22 @@ export default function SandboxContainer({ onEarnXp, activeFeatureTab, setActive
       {/* Render selected training modules */}
       <div className="bg-slate-50/50 rounded-2xl" id="active-sandbox-module-host">
         {activeFeatureTab === 'vocab' && (
-          <VocabularyPractice onEarnXp={onEarnXp} />
+          <VocabularyPractice onEarnXp={onEarnXp} bilingualMode={bilingualMode} />
         )}
         {activeFeatureTab === 'grammar' && (
-          <GrammarPractice onEarnXp={onEarnXp} />
+          <GrammarPractice onEarnXp={onEarnXp} bilingualMode={bilingualMode} />
         )}
         {activeFeatureTab === 'listening' && (
-          <ListeningPractice onEarnXp={onEarnXp} />
+          <ListeningPractice onEarnXp={onEarnXp} bilingualMode={bilingualMode} />
         )}
         {activeFeatureTab === 'speaking' && (
-          <SpeakingPractice onEarnXp={onEarnXp} />
+          <SpeakingPractice onEarnXp={onEarnXp} bilingualMode={bilingualMode} />
         )}
         {activeFeatureTab === 'reading' && (
-          <ReadingPractice onEarnXp={onEarnXp} />
+          <ReadingPractice onEarnXp={onEarnXp} bilingualMode={bilingualMode} />
         )}
         {activeFeatureTab === 'writing' && (
-          <WritingPractice onEarnXp={onEarnXp} />
+          <WritingPractice onEarnXp={onEarnXp} bilingualMode={bilingualMode} />
         )}
       </div>
 

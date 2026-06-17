@@ -10,9 +10,10 @@ import { BookOpen, HelpCircle, CheckCircle, Info, Sparkles, MessageCircle } from
 
 interface ReadingPracticeProps {
   onEarnXp: (amount: number) => void;
+  bilingualMode?: boolean;
 }
 
-export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
+export default function ReadingPractice({ onEarnXp, bilingualMode = true }: ReadingPracticeProps) {
   const [activeStoryId, setActiveStoryId] = useState<string>(sampleStories[0].id);
   const [hoveredVocab, setHoveredVocab] = useState<{ word: string; definition: string } | null>(null);
   const [selectedQuizIndex, setSelectedQuizIndex] = useState<number | null>(null);
@@ -79,17 +80,26 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
       {/* Left Column: Story List & Tooltip Helper */}
       <div className="lg:col-span-4 space-y-4" id="reading-sidebar">
         
-        {/* PM Rationale */}
-        <div className="bg-violet-50/50 border border-violet-100 rounded-2xl p-4 flex gap-3 items-start" id="reading-intro-panel">
-          <div className="w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center font-bold shrink-0 shadow-sm" id="reading-pm-avatar">
-            S
+        {/* Reading Guide Introduction */}
+        <div className="bg-violet-50/50 border border-violet-100 rounded-2xl p-4 flex gap-3 items-start animate-fade-in" id="reading-intro-panel">
+          <div className="w-8 h-8 rounded-xl bg-violet-600 text-white flex items-center justify-center font-bold shrink-0 shadow-sm text-sm" id="reading-pm-avatar">
+            📖
           </div>
           <div>
             <h4 className="text-xs font-bold text-violet-800 uppercase tracking-wider" id="reading-pm-brand">
-              Busuu Interactive Reading
+              {bilingualMode ? "Biblioteca de Leitura Interativa / Reading Practice" : "Biblioteca de Leitura Interativa"}
             </h4>
-            <p className="text-xs text-violet-700/90 mt-1 leading-relaxed" id="reading-pm-rationale">
-              "We present long-form stories containing local Portuguese slang and cultural insights. Hover on underlined words to trigger instantaneous vocabulary lookups." <span className="font-semibold">— Sofia Morel, VP</span>
+            <p className="text-xs text-violet-700/95 mt-1 leading-relaxed" id="reading-pm-rationale">
+              {bilingualMode ? (
+                <>
+                  Explore histórias ricas em vocabulário e contextos práticos de Portugal. Passe o cursor ou toque nas palavras sublinhadas para ver traduções instantâneas.
+                  <span className="block mt-1 text-slate-500 text-[11px] border-t border-violet-200/50 pt-1 font-medium italic">
+                    Explore story environments with European Portuguese settings. Hover or click underlined words to access instant glossary details.
+                  </span>
+                </>
+              ) : (
+                "Explore histórias ricas em vocabulário e contextos práticos de Portugal. Passe o cursor ou toque nas palavras sublinhadas para ver a tradução instantânea e notas gramaticais locais."
+              )}
             </p>
           </div>
         </div>
@@ -97,7 +107,7 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
         {/* Story Selector List */}
         <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-2.5" id="stories-menu-card">
           <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" id="stories-header">
-            Reading Library Catalog
+            {bilingualMode ? "Catálogo de Histórias / Stories Catalog" : "Reading Library Catalog"}
           </h3>
           {sampleStories.map((story) => (
             <button
@@ -129,7 +139,7 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
           <div className="flex items-center gap-2 border-b border-slate-800 pb-2.5" id="dict-header">
             <Info className="w-4 h-4 text-amber-400" id="dict-info-icon" />
             <h4 className="text-[10px] uppercase font-bold tracking-wider text-slate-400" id="dict-title">
-              Instant Reader Glossary
+              {bilingualMode ? "Dicionário Instantâneo / Instant Glossary" : "Instant Reader Glossary"}
             </h4>
           </div>
           {hoveredVocab ? (
@@ -143,7 +153,9 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
             </div>
           ) : (
             <p className="text-xs text-slate-500 leading-normal italic" id="dict-empty-notes">
-              Hover over colored words inside the story text to see instant English explanations, gender markers, and conjugation details here.
+              {bilingualMode 
+                ? "Passe o cursor sobre as palavras sublinhadas para revelar explicações em inglês e marcas de género. / Hover over text words..." 
+                : "Hover over colored words inside the story text to see instant English explanations, gender markers, and conjugation details here."}
             </p>
           )}
         </div>
@@ -169,7 +181,7 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
             {solvedStoryIds.has(currentStory.id) && (
               <span className="flex items-center gap-1 bg-green-50 text-green-700 text-xs px-2.5 py-1 rounded-full border border-green-200 font-bold shrink-0" id="story-xp-badge">
                 <CheckCircle className="w-4 h-4" id="story-check-icon" />
-                Solved (+30 XP)
+                {bilingualMode ? "Resolvido / Solved (+30 XP)" : "Solved (+30 XP)"}
               </span>
             )}
           </div>
@@ -186,7 +198,7 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
                 <details className="group border-t border-slate-100 pt-3" id={`para-details-${pIdx}`}>
                   <summary className="text-[10px] font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-wider cursor-pointer list-none flex items-center gap-1" id={`para-summary-${pIdx}`}>
                     <Sparkles className="w-3.5 h-3.5" id="sparkles-icon" />
-                    Reveal Paragraph Translation
+                    {bilingualMode ? "Revelar Tradução do Parágrafo / Reveal Translation" : "Reveal Paragraph Translation"}
                   </summary>
                   <p className="text-[11px] text-slate-500 italic mt-2 leading-relaxed" id={`para-en-${pIdx}`}>
                     {para.textEn}
@@ -199,13 +211,13 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
           {/* Story Comprehension Quiz */}
           <div className="bg-slate-50/85 p-5 rounded-3xl border border-slate-100 space-y-4" id="story-comprehension-quiz">
             <div className="flex items-center gap-1.5" id="story-quiz-header">
-              <HelpCircle className="w-4.5 h-4.5 text-indigo-505" id="story-quiz-icon" />
-              <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400" id="story-quiz-label">
-                Story Comprehension check
+              <HelpCircle className="w-4.5 h-4.5 text-indigo-500" id="story-quiz-icon" />
+              <h4 className="font-bold text-slate-805 text-xs uppercase tracking-wider text-slate-400" id="story-quiz-label">
+                {bilingualMode ? "Desafio de Compreensão da História / Story Comprehension check" : "Story Comprehension check"}
               </h4>
             </div>
 
-            <p className="text-xs font-bold text-slate-700" id="story-question text">
+            <p className="text-xs font-semibold text-slate-700" id="story-question text">
               {currentStory.questions[0].question}
             </p>
 
@@ -221,7 +233,7 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
                       ? index === currentStory.questions[0].correctIndex
                         ? 'border-green-300 bg-green-50 text-green-800'
                         : selectedQuizIndex === index
-                          ? 'border-red-300 bg-red-50 text-red-800'
+                          ? 'border-red-300 bg-red-50 text-red-808 bg-red-50 text-red-800'
                           : 'border-slate-100 bg-white text-slate-400'
                       : selectedQuizIndex === index
                         ? 'border-indigo-400 bg-indigo-50/30 text-indigo-900 ring-2 ring-indigo-500/10'
@@ -230,10 +242,14 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
                 >
                   <span id={`story-option-text-${index}`}>{opt}</span>
                   {quizSubmitted && index === currentStory.questions[0].correctIndex && (
-                    <span className="text-[10px] uppercase font-bold text-green-700" id="quiz-correct-text">Resolved</span>
+                    <span className="text-[10px] uppercase font-bold text-green-700" id="quiz-correct-text">
+                      {bilingualMode ? "Correto / Resolved" : "Resolved"}
+                    </span>
                   )}
                   {quizSubmitted && selectedQuizIndex === index && index !== currentStory.questions[0].correctIndex && (
-                    <span className="text-[10px] uppercase font-bold text-red-700" id="quiz-incorrect-text">Mistake</span>
+                    <span className="text-[10px] uppercase font-bold text-red-700" id="quiz-incorrect-text">
+                      {bilingualMode ? "Erro / Mistake" : "Mistake"}
+                    </span>
                   )}
                 </button>
               ))}
@@ -245,15 +261,15 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
                 onClick={handleSubmitQuiz}
                 className="w-full bg-indigo-600 hover:bg-indigo-700 transition-colors text-white py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer shadow-xs"
               >
-                Submit Comprehension Quiz
+                {bilingualMode ? "Submeter Diagnóstico de Leitura / Submit Check" : "Submit Comprehension Quiz"}
               </button>
             )}
 
             {quizSubmitted && (
               <div className={`p-4 rounded-2xl border space-y-2 ${
                 answeredCorrectly 
-                  ? 'bg-green-50/30 border-green-100 text-green-900' 
-                  : 'bg-red-50/30 border-red-100 text-red-900'
+                  ? 'bg-green-50/30 border-green-105 bg-green-50/30 border-green-100 text-green-900' 
+                  : 'bg-red-50/30 border-red-105 bg-red-50/30 border-red-100 text-red-900'
               }`} id="story-feedback-box">
                 <div className="flex items-center gap-1.5" id="story-feedback-header">
                   {answeredCorrectly ? (
@@ -262,11 +278,15 @@ export default function ReadingPractice({ onEarnXp }: ReadingPracticeProps) {
                     <MessageCircle className="w-4.5 h-4.5 text-red-650" id="story-fail" />
                   )}
                   <h5 className="font-bold text-xs" id="story-feedback-title">
-                    {answeredCorrectly ? 'Excellent Comprehension! (+30 XP)' : 'Comprehension Failed'}
+                    {answeredCorrectly 
+                      ? bilingualMode ? 'Gabarito Excecional! / Excellent Comprehension! (+30 XP)' : 'Excellent Comprehension! (+30 XP)'
+                      : bilingualMode ? 'Compreensão Incorreta / Comprehension Failed' : 'Comprehension Failed'}
                   </h5>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed" id="story-explanation">
-                  <span className="font-semibold text-slate-800" id="story-exp-pfx">Explanation:</span> {currentStory.questions[0].explanation}
+                <p className="text-xs text-slate-650 leading-relaxed" id="story-explanation">
+                  <span className="font-semibold text-slate-800" id="story-exp-pfx">
+                    {bilingualMode ? "Explicação / Explanation:" : "Explanation:"}
+                  </span> {currentStory.questions[0].explanation}
                 </p>
               </div>
             )}
