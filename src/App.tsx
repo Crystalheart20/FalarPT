@@ -18,6 +18,8 @@ import ListeningPractice from './components/ListeningPractice';
 import SpeakingPractice from './components/SpeakingPractice';
 import ReadingPractice from './components/ReadingPractice';
 import WritingPractice from './components/WritingPractice';
+import { moduleLessonsData } from './data/moduleLessons';
+import ModuleWorkspace from './components/ModuleWorkspace';
 
 // Define custom types for our active interactive lessons
 interface InteractiveQuizQuestion {
@@ -140,6 +142,58 @@ export default function App() {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizSubmitted, setQuizSubmitted] = useState<boolean>(false);
   const [lessonXpEarned, setLessonXpEarned] = useState<number>(0);
+
+  // Custom educational Module state handlers
+  const [activeModuleLesson, setActiveModuleLesson] = useState<any>(null);
+  const [completedModules, setCompletedModules] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('completedModules');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('completedModules', JSON.stringify(completedModules));
+    } catch (e) {
+      // ignore
+    }
+  }, [completedModules]);
+
+  // Dynamic curriculum keys generator matching moduleLessonsData
+  const getModuleKey = (level: string, uIdx: number, mIdx: number): string => {
+    let unitNum = 1;
+    if (level === "A1") unitNum = uIdx === 0 ? 1 : 2;
+    else if (level === "A2") unitNum = 3 + uIdx;
+    else if (level === "B1") unitNum = 4 + uIdx;
+    else if (level === "B2") unitNum = 5 + uIdx;
+    else if (level === "C1") unitNum = 6 + uIdx;
+    else if (level === "C2") unitNum = 7 + uIdx;
+    return `${level}_U${unitNum}_M${mIdx + 1}`;
+  };
+
+  const handleLaunchModule = (level: string, uIdx: number, mIdx: number) => {
+    const key = getModuleKey(level, uIdx, mIdx);
+    const lesson = moduleLessonsData[key];
+    if (lesson) {
+      setActiveModuleLesson(lesson);
+    } else {
+      // Gentle fallback warning
+      alert(`Conteúdo do módulo ${key} em preparação.`);
+    }
+  };
+
+  const handleCompleteModuleWorkspace = (key: string, xpEarned: number) => {
+    if (!completedModules.includes(key)) {
+      setCompletedModules(prev => [...prev, key]);
+    }
+    // Complete daily quest automatically
+    const nextQuests = new Set(completedQuests);
+    nextQuests.add("lesson");
+    setCompletedQuests(nextQuests);
+  };
 
   // List of completed quests
   const [completedQuests, setCompletedQuests] = useState<Set<string>>(new Set());
@@ -649,40 +703,54 @@ export default function App() {
                             <h3 className="text-xs uppercase tracking-wider font-extrabold text-indigo-900">{unit.unitTitle}</h3>
                             
                             <div className="space-y-3 mt-3" id={`unit-modules-${uIdx}`}>
-                              {unit.modules.map((mod, mIdx) => (
-                                <div key={mIdx} className="bg-slate-50/60 hover:bg-slate-50 border border-slate-150 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all">
-                                  <div className="space-y-1" id={`mod-desc-${uIdx}-${mIdx}`}>
-                                    <h5 className="text-xs font-black text-slate-800 uppercase leading-snug">{mod.moduleTitle}</h5>
-                                    
-                                    <div className="flex flex-wrap gap-1 md:gap-2 pt-1" id={`mod-list-tags-${uIdx}-${mIdx}`}>
-                                      {mod.lessons.map((less, lIdx) => (
-                                        <span key={lIdx} className="text-[9px] bg-white border border-slate-200 px-1.5 py-0.5 rounded font-mono text-slate-500" id={`lesson-badge-${uIdx}-${mIdx}-${lIdx}`}>
-                                          {less.split(': ')[1] || less}
-                                        </span>
-                                      ))}
+                              {unit.modules.map((mod, mIdx) => {
+                                const mKey = getModuleKey(selectedCefrId, uIdx, mIdx);
+                                const isCompleted = completedModules.includes(mKey);
+                                return (
+                                  <div 
+                                    key={mIdx} 
+                                    className={`border p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all ${
+                                      isCompleted 
+                                        ? 'bg-green-500/10 border-green-500/30' 
+                                        : 'bg-slate-50/60 dark:bg-slate-900/40 border-slate-150 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
+                                    }`}
+                                  >
+                                    <div className="space-y-1.5" id={`mod-desc-${uIdx}-${mIdx}`}>
+                                      <div className="flex flex-wrap items-center gap-2">
+                                        <h5 className="text-xs font-black text-slate-800 dark:text-white uppercase leading-snug">
+                                          {mod.moduleTitle}
+                                        </h5>
+                                        {isCompleted && (
+                                          <span className="inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/40 px-2 py-0.5 rounded-md border border-green-200 dark:border-green-800">
+                                            <Check className="w-2.5 h-2.5 font-bold text-green-600 shrink-0" /> Concluído
+                                          </span>
+                                        )}
+                                      </div>
+                                      
+                                      <div className="flex flex-wrap gap-1 md:gap-2 pt-0.5" id={`mod-list-tags-${uIdx}-${mIdx}`}>
+                                        {mod.lessons.map((less, lIdx) => (
+                                          <span 
+                                            key={lIdx} 
+                                            className="text-[9px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-1.5 py-0.5 rounded font-mono text-slate-600 dark:text-slate-350" 
+                                            id={`lesson-badge-${uIdx}-${mIdx}-${lIdx}`}
+                                          >
+                                            {less.split(': ')[1] || less}
+                                          </span>
+                                        ))}
+                                      </div>
                                     </div>
+
+                                    <button
+                                      onClick={() => handleLaunchModule(selectedCefrId, uIdx, mIdx)}
+                                      className="bg-indigo-600 hover:bg-indigo-700 hover:scale-[1.02] active:scale-95 transition-all text-white text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 shrink-0 cursor-pointer shadow-xs"
+                                    >
+                                      <BookOpen className="w-3.5 h-3.5" />
+                                      Aprender & Praticar
+                                    </button>
+
                                   </div>
-
-                                  {selectedCefrId === "A1" ? (
-                                    <button
-                                      onClick={startLesson}
-                                      className="bg-indigo-600 hover:bg-indigo-700 hover:scale-[1.02] active:scale-95 transition-all text-white text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl flex items-center justify-center gap-1 shrink-0 cursor-pointer shadow-xs"
-                                    >
-                                      <Play className="w-3.5 h-3.5 fill-white stroke-none" />
-                                      Praticar Dia 1
-                                    </button>
-                                  ) : (
-                                    <button
-                                      disabled
-                                      className="bg-slate-100 border border-slate-200 text-slate-400 text-[10px] font-bold uppercase tracking-wider py-2.5 px-3.5 rounded-xl shrink-0 cursor-not-allowed"
-                                      title="Desbloqueie completando as lições de nível A1!"
-                                    >
-                                      Bloqueado
-                                    </button>
-                                  )}
-
-                                </div>
-                              ))}
+                                );
+                              })}
                             </div>
 
                           </div>
@@ -943,6 +1011,21 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Module Workspace Overlay Modal */}
+      {activeModuleLesson && (
+        <ModuleWorkspace
+          moduleLesson={activeModuleLesson}
+          bilingualMode={bilingualMode}
+          onClose={() => setActiveModuleLesson(null)}
+          onEarnXp={(xp) => {
+            handleEarnXp(xp);
+          }}
+          onComplete={(xpEarned) => {
+            handleCompleteModuleWorkspace(activeModuleLesson.moduleKey, xpEarned);
+          }}
+        />
+      )}
 
     </div>
   );
