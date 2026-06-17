@@ -185,14 +185,14 @@ export default function WritingPractice({ onEarnXp, bilingualMode = true }: Writ
             ✏️
           </div>
           <div>
-            <h4 className="text-xs font-bold text-indigo-800 uppercase tracking-wider" id="writing-pm-brand">
+            <h4 className="text-xs font-black text-indigo-900 uppercase tracking-wider" id="writing-pm-brand">
               {bilingualMode ? "Oficina de Escrita Prática / AI Writing Studio" : "Oficina de Escrita Prática (Tutor IA)"}
             </h4>
-            <p className="text-xs text-indigo-707 mt-1 leading-relaxed" id="writing-pm-rationale">
+            <p className="text-xs text-indigo-950 mt-1 leading-relaxed font-semibold" id="writing-pm-rationale">
               {bilingualMode ? (
                 <>
                   Escreva pequenos textos práticos para o quotidiano em Portugal (como mensagens para senhorio ou atestados). O nosso motor de inteligência artificial analisa a sua sintaxe!
-                  <span className="block mt-1 text-slate-500 text-[11px] border-t border-indigo-200/50 pt-1 font-medium italic">
+                  <span className="block mt-2 text-slate-850 text-[11.5px] border-t border-indigo-300 pt-2 font-bold not-italic">
                     Draft real-world European Portuguese correspondence (e.g., messages to landlords). Our AI checks spelling, pronouns, and polite formal syntax.
                   </span>
                 </>
@@ -204,8 +204,8 @@ export default function WritingPractice({ onEarnXp, bilingualMode = true }: Writ
         </div>
 
         {/* Challenges list */}
-        <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-2.5" id="challenges-card">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" id="challenges-header">
+        <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-2.5 shadow-2xs" id="challenges-card">
+          <h3 className="text-xs font-black text-slate-700 uppercase tracking-wider mb-2" id="challenges-header">
             {bilingualMode ? "Tarefas de Escrita / Active Assignments" : "Active Writing Assignments"}
           </h3>
           {challenges.map((c) => (
@@ -240,34 +240,34 @@ export default function WritingPractice({ onEarnXp, bilingualMode = true }: Writ
             <h2 className="text-lg lg:text-xl font-bold text-slate-800 tracking-tight mt-1.5" id="ch-title-heading">
               {currentChallenge.title}
             </h2>
-            <p className="text-xs text-slate-500 mt-2.5 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100 font-medium" id="ch-scenario">
-              <span className="font-bold text-slate-700 block text-[11px] mb-1 uppercase tracking-wider">
+            <div className="text-xs text-slate-900 mt-2.5 leading-relaxed bg-slate-100 p-3.5 rounded-xl border-2 border-slate-200 font-extrabold" id="ch-scenario">
+              <span className="font-black text-slate-950 block text-[11px] mb-1 uppercase tracking-wider">
                 {bilingualMode ? "A Situação Narrativa / Scenario Narrative:" : "Scenario Narrative:"}
               </span>
               {currentChallenge.scenario}
-            </p>
+            </div>
           </div>
 
           {/* User Writing Prompt */}
-          <div className="space-y-2" id="writing-prompt-text-block">
-            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider" id="prompt-label">
+          <div className="space-y-2 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 shadow-3xs" id="writing-prompt-text-block">
+            <h4 className="text-xs font-black text-indigo-900 uppercase tracking-wider animate-pulse" id="prompt-label">
               {bilingualMode ? "Diretiva da Tarefa / Assignment Directive" : "Assignment Directive"}
             </h4>
-            <p className="text-xs text-slate-700 font-semibold leading-relaxed" id="ch-prompt-directive">
+            <p className="text-xs text-indigo-950 font-black leading-relaxed" id="ch-prompt-directive">
               {currentChallenge.prompt}
             </p>
           </div>
 
           {/* Word assist box */}
-          <div className="space-y-2" id="vocabulary-aid-box">
-            <span className="text-[10px] uppercase font-bold text-indigo-500 tracking-wider block" id="vocab-aid-label">
+          <div className="space-y-2 bg-slate-100 p-3.5 rounded-xl border border-slate-200 shadow-3xs" id="vocabulary-aid-box">
+            <span className="text-[10.5px] uppercase font-black text-indigo-900 tracking-wider block" id="vocab-aid-label">
               {bilingualMode ? "Recomendações de Vocabulário Útil / Recommended Vocabulary" : "In-Context Vocabulary Recommendations"}
             </span>
             <div className="flex flex-wrap gap-1.5" id="vocab-recommendation-chips">
               {currentChallenge.helpfulWords.map((word, idx) => (
                 <span
                   key={idx}
-                  className="bg-slate-50 text-slate-600 text-[11px] font-medium px-2.5 py-1 rounded-lg border border-slate-150 flex items-center gap-1 cursor-default hover:bg-indigo-50/40 hover:text-indigo-800 transition-colors"
+                  className="bg-white text-slate-900 text-[11.5px] font-black px-2.5 py-1 rounded-lg border-2 border-slate-250 border-slate-200 flex items-center gap-1 cursor-default hover:bg-indigo-100 hover:text-indigo-950 transition-colors shadow-3xs"
                   id={`vocab-chip-${idx}`}
                 >
                   <FileText className="w-3.5 h-3.5 text-slate-400" id={`vocab-chip-icon-${idx}`} />
@@ -280,14 +280,14 @@ export default function WritingPractice({ onEarnXp, bilingualMode = true }: Writ
           {/* Draft Input */}
           <div className="space-y-2.5 pt-2" id="draft-submission-block">
             <div className="flex justify-between items-center" id="draft-labels-row">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1" id="draft-label">
-                <Edit3 className="w-4 h-4 text-slate-400" id="edit-draft-icon" />
+              <label className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5" id="draft-label">
+                <Edit3 className="w-4 h-4 text-indigo-700 font-black" id="edit-draft-icon" />
                 {bilingualMode ? "Submeter Rascunho em Português / Your Draft" : "Submit Your Portuguese Draft"}
               </label>
               <button
                 id="toggle-ref-btn"
                 onClick={() => setShowReference(!showReference)}
-                className="text-[11px] text-indigo-650 hover:text-indigo-800 font-bold underline transition-colors cursor-pointer"
+                className="text-xs text-indigo-800 hover:text-indigo-950 font-black underline transition-colors cursor-pointer bg-slate-100 px-3 py-1 rounded-lg border border-slate-250 shadow-3xs"
               >
                 {showReference 
                   ? bilingualMode ? "Ocultar Referência / Hide Outline" : "Close Reference"
@@ -339,11 +339,11 @@ export default function WritingPractice({ onEarnXp, bilingualMode = true }: Writ
 
           {/* Loading Screen Status update */}
           {loading && (
-            <div className="bg-slate-50 border border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center space-y-3" id="loading-screen-dialog">
-              <Loader2 className="w-7 h-7 text-indigo-600 animate-spin" id="loading-spinner" />
+            <div className="bg-slate-100 border-2 border-slate-350 p-5 rounded-2xl flex flex-col items-center justify-center space-y-3" id="loading-screen-dialog">
+              <Loader2 className="w-7 h-7 text-indigo-800 animate-spin" id="loading-spinner" />
               <div className="text-center" id="loading-messages">
-                <p className="text-xs font-bold text-slate-700" id="loading-main-label">AI Tutor Analysis Active</p>
-                <p className="text-[10px] text-slate-450 mt-1 font-mono italic animate-pulse" id="loading-status-logs">
+                <p className="text-xs font-black text-slate-950" id="loading-main-label">AI Tutor Analysis Active</p>
+                <p className="text-[11px] text-slate-900 mt-1 font-mono font-bold animate-pulse" id="loading-status-logs">
                   {loadingStepText}
                 </p>
               </div>
@@ -366,35 +366,35 @@ export default function WritingPractice({ onEarnXp, bilingualMode = true }: Writ
               {/* Score & CEFR Grade block */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4" id="score-block-grid">
                 
-                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 text-center flex flex-col justify-center items-center space-y-1" id="overall-score-card">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider" id="overall-score-title">
+                <div className="bg-slate-100 border-2 border-slate-200 rounded-2xl p-5 text-center flex flex-col justify-center items-center space-y-1" id="overall-score-card">
+                  <span className="text-[10px] uppercase font-black text-slate-750 tracking-wider" id="overall-score-title">
                     {bilingualMode ? "Pontuação de Precisão / Accuracy Score" : "Accuracy Score"}
                   </span>
-                  <p className={`text-4xl font-bold tracking-tight ${evalResult.score >= 80 ? 'text-green-600' : 'text-amber-500'}`} id="overall-score-val">
+                  <p className={`text-4xl font-extrabold tracking-tight ${evalResult.score >= 80 ? 'text-green-700' : 'text-amber-600'}`} id="overall-score-val">
                     {evalResult.score}/100
                   </p>
-                  <span className="text-[10px] text-slate-400 font-medium" id="score-xp-reward">
+                  <span className="text-[11px] text-slate-800 font-extrabold" id="score-xp-reward">
                     {evalResult.score >= 80 ? '+50 XP Multiplier' : '+20 XP Participation'}
                   </span>
                 </div>
 
-                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 text-center flex flex-col justify-center items-center space-y-1" id="cefr-grade-card">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider" id="overall-grade-title">
+                <div className="bg-slate-100 border-2 border-slate-200 rounded-2xl p-5 text-center flex flex-col justify-center items-center space-y-1" id="cefr-grade-card">
+                  <span className="text-[10px] uppercase font-black text-slate-750 tracking-wider" id="overall-grade-title">
                     {bilingualMode ? "Nível Demonstrado / Demonstrated CEFR" : "Demonstrated CEFR"}
                   </span>
-                  <span className="text-3xl font-extrabold text-indigo-600" id="overall-grade-val">
+                  <span className="text-3xl font-black text-indigo-900" id="overall-grade-val">
                     {evalResult.grade}
                   </span>
-                  <span className="text-[10px] text-slate-400 font-medium" id="grade-label">
+                  <span className="text-[11px] text-slate-800 font-extrabold" id="grade-label">
                     Pre-Intermediate
                   </span>
                 </div>
 
-                <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-5 flex flex-col justify-center space-y-1" id="ai-verdict-card">
-                  <span className="text-[10px] uppercase font-bold text-indigo-700 tracking-wider" id="tutor-label-header">
+                <div className="bg-indigo-100/50 border-2 border-indigo-200 rounded-2xl p-5 flex flex-col justify-center space-y-1" id="ai-verdict-card">
+                  <span className="text-[10px] uppercase font-black text-indigo-950 tracking-wider" id="tutor-label-header">
                     {bilingualMode ? "Parecer do Tutor IA / AI Evaluation" : "AI Tutor Evaluation"}
                   </span>
-                  <p className="text-xs text-slate-600 leading-relaxed line-clamp-3 italic" id="feedback-desc">
+                  <p className="text-xs text-slate-900 font-bold leading-relaxed line-clamp-3" id="feedback-desc">
                     "{evalResult.generalFeedback}"
                   </p>
                 </div>
@@ -403,34 +403,34 @@ export default function WritingPractice({ onEarnXp, bilingualMode = true }: Writ
               {/* Specific grammar corrections */}
               {evalResult.corrections.length > 0 && (
                 <div className="space-y-3.5" id="grammar-corrections-section">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5" id="corrections-header">
-                    <AlertCircle className="w-4 h-4 text-amber-500" id="alert-icon-info" />
+                  <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5" id="corrections-header">
+                    <AlertCircle className="w-4 h-4 text-amber-600" id="alert-icon-info" />
                     {bilingualMode ? "Relatório de Correções Linguísticas / Corrections & Rules" : "Linguistic Corrections & Orthography Rules"}
                   </h4>
 
                   <div className="space-y-3" id="corrections-items-scroller">
                     {evalResult.corrections.map((corr, idx) => (
-                      <div key={idx} className="bg-slate-50 border border-slate-150 p-4.5 rounded-2xl space-y-2.5" id={`correction-item-${idx}`}>
+                      <div key={idx} className="bg-slate-105 bg-slate-100 border-2 border-slate-200 p-4.5 rounded-2xl space-y-2.5" id={`correction-item-${idx}`}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3" id={`correction-comparison-grid-${idx}`}>
                            <div className="space-y-1" id={`incorrect-block-${idx}`}>
-                            <span className="text-[9px] uppercase font-bold text-red-500" id={`incorrect-lbl-${idx}`}>
+                            <span className="text-[9px] uppercase font-bold text-red-650" id={`incorrect-lbl-${idx}`}>
                               {bilingualMode ? "O Seu Rascunho / Your Submission" : "Your Submission"}
                             </span>
-                            <p className="text-xs font-mono font-medium text-red-900 bg-red-50/30 rounded px-2 py-1 line-through" id={`incorrect-text-${idx}`}>
+                            <p className="text-xs font-mono font-bold text-red-950 bg-red-100/40 rounded px-2 py-1 line-through border border-red-200" id={`incorrect-text-${idx}`}>
                               {corr.incorrect}
                             </p>
                           </div>
                           <div className="space-y-1" id={`correct-block-${idx}`}>
-                            <span className="text-[9px] uppercase font-bold text-green-700" id={`correct-lbl-${idx}`}>
+                            <span className="text-[9px] uppercase font-bold text-green-800" id={`correct-lbl-${idx}`}>
                               {bilingualMode ? "Hábito de Portugal (Padrão) / European Portuguese Standard" : "Portugal Habit (Standard)"}
                             </span>
-                            <p className="text-xs font-mono font-medium text-green-900 bg-green-50/30 rounded px-2 py-1" id={`correct-text-${idx}`}>
+                            <p className="text-xs font-mono font-bold text-green-950 bg-green-100/40 rounded px-2 py-1 border border-green-200" id={`correct-text-${idx}`}>
                               {corr.correct}
                             </p>
                           </div>
                         </div>
-                        <p className="text-xs text-slate-650 leading-relaxed pt-1.5 border-t border-slate-200/50" id={`explanation-text-${idx}`}>
-                          <span className="font-semibold text-slate-700" id={`exp-pfx-${idx}`}>
+                        <p className="text-xs text-slate-900 font-extrabold leading-relaxed pt-1.5 border-t border-slate-200" id={`explanation-text-${idx}`}>
+                          <span className="font-black text-slate-950 bg-slate-200 px-1 py-0.5 rounded" id={`exp-pfx-${idx}`}>
                             {bilingualMode ? "Explicação da Regra / Rule Description:" : "Rule explanation:"}
                           </span> {corr.explanation}
                         </p>
@@ -441,19 +441,19 @@ export default function WritingPractice({ onEarnXp, bilingualMode = true }: Writ
               )}
 
               {/* POLITE REWRITE */}
-              <div className="bg-indigo-950 text-slate-100 p-5 rounded-2xl border border-indigo-900 space-y-3" id="polite-rewrite-card">
-                <div className="flex items-center gap-2 border-b border-indigo-900 pb-2.5" id="rewrite-header">
-                  <CheckCircle2 className="w-4.5 h-4.5 text-emerald-400" id="emerald-check-icon" />
-                  <h4 className="text-[10px] uppercase font-bold tracking-wider text-indigo-300" id="rewrite-title">
+              <div className="bg-indigo-955 bg-slate-900 text-slate-100 p-5 rounded-2xl border-2 border-slate-800 space-y-3" id="polite-rewrite-card">
+                <div className="flex items-center gap-2 border-b border-slate-800 pb-2.5" id="rewrite-header">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-405 text-emerald-400" id="emerald-check-icon" />
+                  <h4 className="text-[10px] uppercase font-black tracking-wider text-amber-400" id="rewrite-title">
                     {bilingualMode ? "Proposta de Reescrita Polida / Polite Native Rewrite" : "Perfect European Portuguese Form (Polite Rewrite)"}
                   </h4>
                 </div>
-                <div className="p-3 bg-indigo-900/40 rounded-xl border border-indigo-900/50" id="rewrite-box">
-                  <p className="font-mono text-xs text-slate-200 leading-relaxed whitespace-pre-wrap pt-pt-font" id="rewrite-text">
+                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800" id="rewrite-box">
+                  <p className="font-mono text-xs text-slate-100 leading-relaxed whitespace-pre-wrap pt-pt-font font-bold" id="rewrite-text">
                     {evalResult.politeRewrite}
                   </p>
                 </div>
-                <p className="text-[10px] text-slate-400 leading-normal" id="rewrite-disclaimer">
+                <p className="text-[11px] text-slate-300 leading-normal font-semibold font-sans" id="rewrite-disclaimer">
                   {bilingualMode 
                     ? "Esta reescrita respeita estritamente o protocolo social e a etiqueta corporativa tradicional portuguesa corrente em Lisboa ou Porto."
                     : "This rewrite conforms to standard administrative etiquette in Portugal. It incorporates the correct 1990 Orthographic structures and preserves a highly respectful spacing tone."}

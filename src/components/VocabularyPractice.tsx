@@ -75,19 +75,19 @@ export default function VocabularyPractice({ onEarnXp, bilingualMode = true }: V
   return (
     <div className="space-y-6" id="vocabulary-engine-root">
       {/* Description */}
-      <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-4 flex gap-3 items-start animate-fade-in" id="vocab-intro">
+      <div className="bg-amber-50/50 border border-amber-200 rounded-2xl p-4 flex gap-3 items-start animate-fade-in" id="vocab-intro">
         <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs text-sm font-bold" id="vocab-pm-avatar">
           🇵🇹
         </div>
         <div>
-          <h4 className="text-xs font-bold text-amber-800 uppercase tracking-wider" id="vocab-pm-brand">
+          <h4 className="text-xs font-black text-amber-900 uppercase tracking-wider" id="vocab-pm-brand">
             {bilingualMode ? "Treino de Vocabulário Autêntico / Authentic Vocabulary flashcards" : "Treino de Vocabulário Autêntico (Spaced Repetition)"}
           </h4>
-          <p className="text-xs text-amber-705 mt-1 leading-relaxed" id="vocab-pm-rationale">
+          <p className="text-xs text-amber-950 mt-1 leading-relaxed font-semibold animate-fade-in" id="vocab-pm-rationale">
             {bilingualMode ? (
               <>
                 Aprenda as palavras exatas usadas em Portugal. Destacamos as diferenças em relação ao Português do Brasil para evitar equívocos sociais ou burocráticos. Clique no ícone de som para ouvir a pronúncia em Português Europeu (pt-PT).
-                <span className="block mt-1 text-slate-500 text-[11px] border-t border-amber-200/50 pt-1 font-medium italic">
+                <span className="block mt-2.5 text-slate-800 text-[11.5px] border-t border-amber-300/60 pt-2 font-bold not-italic">
                   Learn the exact words used in Portugal. We highlight crucial differences from Brazilian Portuguese to prevent social or bureaucratic mistakes. Click the speaker icon to hear the native European Portuguese (pt-PT) audio.
                 </span>
               </>
@@ -121,17 +121,17 @@ export default function VocabularyPractice({ onEarnXp, bilingualMode = true }: V
       </div>
 
       {filteredList.length === 0 ? (
-        <div className="text-center py-12 text-slate-405 font-medium text-xs" id="vocab-empty-notice">
+        <div className="text-center py-12 text-slate-800 font-extrabold text-xs bg-slate-100 rounded-xl border border-slate-200 inline-block w-full" id="vocab-empty-notice">
           {bilingualMode ? "Nenhum vocabulário correspondente foi carregado. / No matching vocabulary loaded." : "No vocabulary matching this category was loaded."}
         </div>
       ) : (
         <div className="max-w-md mx-auto space-y-6" id="vocab-card-carousel-section">
           {/* Confetti & Stats indicator */}
           <div className="flex items-center justify-between px-2" id="flashcard-stats-display">
-            <span className="text-xs text-slate-400 font-mono" id="carousel-indexer">
+            <span className="text-xs text-slate-800 font-black font-mono" id="carousel-indexer">
               {bilingualMode ? `Palavra ${currentIndex + 1} de ${filteredList.length} / Word ${currentIndex + 1} of ${filteredList.length}` : `Word ${currentIndex + 1} of ${filteredList.length}`}
             </span>
-            <span className="flex items-center gap-1 text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full" id="srs-mastery-streak">
+            <span className="flex items-center gap-1 text-xs font-black text-amber-900 bg-amber-100 border border-amber-200 px-3 py-1 rounded-full" id="srs-mastery-streak">
               <Star className="w-3.5 h-3.5 fill-amber-500 stroke-amber-500" id="star-icon" />
               {learnedIds.size} / {sampleVocabularyList.length} {bilingualMode ? "Dominado(s) / Mastered" : "Mastered"}
             </span>
@@ -162,27 +162,29 @@ export default function VocabularyPractice({ onEarnXp, bilingualMode = true }: V
                   </button>
                 </div>
 
-                <div className="text-center space-y-2 mt-4" id="front-center-word-block">
-                  <p className="text-3xl font-bold text-slate-800 tracking-tight" id="front-pt-word">
+                <div className="text-center space-y-2.5 mt-4" id="front-center-word-block">
+                  <p className="text-3.5xl font-black text-slate-900 tracking-tight" id="front-pt-word">
                     {currentWord.portuguese}
                   </p>
-                  <p className="text-xs text-slate-400 font-mono tracking-wider italic" id="front-phonetic-spelling">
-                    /{currentWord.pronunciation}/
-                  </p>
+                  <div className="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-xl shadow-2xs">
+                    <p className="text-xs text-slate-800 font-black font-mono tracking-wider italic" id="front-phonetic-spelling">
+                      /{currentWord.pronunciation}/
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex justify-between items-center text-slate-450 border-t border-slate-50 pt-4" id="front-footer-rail">
-                  <span className="text-[10px] flex items-center gap-1 font-semibold text-slate-400" id="tap-instruction-1">
-                    <RefreshCw className="w-3.5 h-3.5 animate-spin-slow text-indigo-505" id="spin-refresh-icon" />
+                <div className="flex justify-between items-center text-slate-700 border-t border-slate-150 pt-4" id="front-footer-rail">
+                  <span className="text-[11px] flex items-center gap-1-5 font-bold text-slate-700" id="tap-instruction-1">
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin-slow text-indigo-650" id="spin-refresh-icon" />
                     {bilingualMode ? "Toque para virar / Tap to Flip" : "Tap Card to Flip"}
                   </span>
                   <button
                     id="front-complete-action-btn"
                     onClick={(e) => handleMarkAsLearned(currentWord.id, e)}
-                    className={`text-[11px] font-bold px-3 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${
+                    className={`text-[11px] font-black px-3 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${
                       learnedIds.has(currentWord.id)
-                        ? 'border-green-200 bg-green-50 text-green-700'
-                        : 'border-slate-100 hover:border-amber-300 hover:bg-amber-50 text-slate-500 hover:text-amber-700'
+                        ? 'border-green-300 bg-green-100 text-green-900'
+                        : 'border-slate-300 hover:border-amber-400 hover:bg-amber-50 text-slate-800 hover:text-amber-900 bg-slate-50'
                     }`}
                   >
                     <Check className="w-3 h-3" id="check-icon-1" />
@@ -196,53 +198,53 @@ export default function VocabularyPractice({ onEarnXp, bilingualMode = true }: V
               {/* CARD BACK: English definition and contrasting notes */}
               <div className="absolute inset-0 bg-slate-900 text-white rounded-3xl p-6 flex flex-col justify-between shadow-md rotate-y-180 backface-hidden" id="card-back-face">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-3" id="card-back-top-rail">
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-amber-400" id="card-back-cat-badge">
+                  <span className="text-[10px] uppercase font-black tracking-widest text-amber-400" id="card-back-cat-badge">
                     {bilingualMode ? "Tradução de Apoio / English Definition" : "English Definition"}
                   </span>
-                  <span className="text-[10px] text-slate-500 font-mono" id="card-back-id">
+                  <span className="text-[10px] text-slate-300 font-extrabold font-mono" id="card-back-id">
                     SRS Core Module
                   </span>
                 </div>
 
                 <div className="space-y-4 py-2" id="back-center-definition-block">
                   <div className="text-center" id="back-definition-main">
-                    <p className="text-2xl font-bold text-slate-100" id="back-en-translation">
+                    <p className="text-2.5xl font-black text-white" id="back-en-translation">
                       {currentWord.english}
                     </p>
                   </div>
 
                   {currentWord.brazilianContrast && (
-                    <div className="bg-slate-800/80 p-2.5 rounded-xl border border-red-500/10 space-y-0.5" id="brazilian-contrast-container">
-                      <span className="text-[9px] uppercase font-bold tracking-wider text-red-400 block" id="contrast-header-label">
+                    <div className="bg-slate-800 p-2.5 rounded-xl border border-red-500/30 space-y-1 shadow-xs" id="brazilian-contrast-container">
+                      <span className="text-[10px] uppercase font-black tracking-wider text-red-400 block" id="contrast-header-label">
                         {bilingualMode ? "Alerta de Desvio Brasileiro / Brazilian PT Slip" : "Brazilian Portuguese Slip"}
                       </span>
-                      <p className="text-xs text-slate-300 font-medium" id="contrast-body">
+                      <p className="text-xs text-white font-bold leading-normal" id="contrast-body">
                         {bilingualMode ? (
                           <>
-                            Não diga <span className="line-through text-red-300 font-bold">{currentWord.brazilianContrast}</span> em Portugal (termo brasileiro).
+                            Não diga <span className="line-through text-red-300 font-black">{currentWord.brazilianContrast}</span> em Portugal (termo brasileiro).
                           </>
                         ) : (
                           <>
-                            Do not say <span className="line-through text-red-300 font-bold">{currentWord.brazilianContrast}</span> in Portugal.
+                            Do not say <span className="line-through text-red-300 font-black">{currentWord.brazilianContrast}</span> in Portugal.
                           </>
                         )}
                       </p>
                     </div>
                   )}
 
-                  <p className="text-[11px] text-slate-300 italic text-center bg-slate-800/20 px-3 py-1.5 rounded-lg border border-slate-800" id="back-usage-notes">
+                  <p className="text-[11.5px] text-white font-semibold italic text-center bg-slate-850 p-2.5 rounded-lg border border-slate-700" id="back-usage-notes">
                     {currentWord.notes}
                   </p>
                 </div>
 
-                <div className="space-y-1 mt-auto" id="back-footer-examples">
-                  <span className="text-[9px] uppercase tracking-wider text-slate-500 block font-bold" id="example-title-label">
+                <div className="space-y-1.5 mt-auto bg-slate-850/40 p-2.5 rounded-xl border border-slate-800" id="back-footer-examples">
+                  <span className="text-[9.5px] uppercase tracking-wider text-amber-450 text-amber-450 font-black block" id="example-title-label">
                     {bilingualMode ? "Frase de Exemplo em Portugal / Usage Example (PT)" : "Usage Example (European PT)"}
                   </span>
-                  <p className="text-[11px] font-medium text-slate-300 leading-snug" id="example-pt-box">
+                  <p className="text-[11.5px] font-black text-white leading-snug" id="example-pt-box">
                     "{currentWord.examplePt}"
                   </p>
-                  <p className="text-[10px] text-slate-400 leading-snug" id="example-en-box">
+                  <p className="text-[11px] text-slate-200 font-bold leading-snug italic" id="example-en-box">
                     "{currentWord.exampleEn}"
                   </p>
                 </div>
@@ -264,9 +266,9 @@ export default function VocabularyPractice({ onEarnXp, bilingualMode = true }: V
             <button
               id="tap-hint-button"
               onClick={() => setIsFlipped(!isFlipped)}
-              className="text-xs font-semibold px-4 py-2 bg-slate-50 hover:bg-slate-100 transition-colors rounded-full text-slate-500 flex items-center gap-1.5 shadow-xs"
+              className="text-xs font-black px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors rounded-full text-slate-800 flex items-center gap-1.5 shadow-xs"
             >
-              <RefreshCw className="w-4 h-4 text-slate-400" id="hint-spin-icon" />
+              <RefreshCw className="w-4 h-4 text-slate-700" id="hint-spin-icon" />
               {bilingualMode ? "Virar Cartão / Flip card" : "Flip Answer"}
             </button>
 

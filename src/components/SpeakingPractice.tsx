@@ -115,14 +115,14 @@ export default function SpeakingPractice({ onEarnXp, bilingualMode = true }: Spe
           🗣️
         </div>
         <div>
-          <h4 className="text-xs font-bold text-amber-800 uppercase tracking-wider" id="speaking-pm-brand">
+          <h4 className="text-xs font-black text-amber-900 uppercase tracking-wider" id="speaking-pm-brand">
             {bilingualMode ? "Treino de Redução de Sotaque / Accent Reduction Practice" : "Treino de Redução de Sotaque (Pronúncia)"}
           </h4>
-          <p className="text-xs text-amber-705 mt-1 leading-relaxed" id="speaking-pm-rationale">
+          <p className="text-xs text-amber-950 mt-1 leading-relaxed font-semibold" id="speaking-pm-rationale">
             {bilingualMode ? (
               <>
                 O som do Português Europeu baseia-se num ritmo de tempo acentuado (stress-timed), com forte redução das vogais átonas. Evite abrir as vogais excessivamente para falar de forma natural.
-                <span className="block mt-1 text-slate-500 text-[11px] border-t border-amber-200/50 pt-1 font-medium italic">
+                <span className="block mt-2.5 text-slate-800 text-[11.5px] border-t border-amber-300 pt-2 font-bold not-italic">
                   European Portuguese uses a stress-timed rhythm with significant vowel reduction. Avoid over-opening unstressed vowels to develop a natural, native accent.
                 </span>
               </>
@@ -136,7 +136,7 @@ export default function SpeakingPractice({ onEarnXp, bilingualMode = true }: Spe
       <div className="max-w-xl mx-auto bg-white rounded-3xl border border-slate-100 p-6 lg:p-8 space-y-6 shadow-xs" id="speaking-practice-card">
         
         {/* Phase progress indicator */}
-        <div className="flex justify-between items-center text-xs text-slate-400 font-mono" id="progress-indicator">
+        <div className="flex justify-between items-center text-xs text-slate-800 font-bold font-mono" id="progress-indicator">
           <span id="phrase-index-tracker">
             {bilingualMode ? `Tarefa ${activePhraseIdx + 1} de ${challengePhrases.length} / Task ${activePhraseIdx + 1} of ${challengePhrases.length}` : `Task ${activePhraseIdx + 1} of ${challengePhrases.length}`}
           </span>
@@ -158,32 +158,34 @@ export default function SpeakingPractice({ onEarnXp, bilingualMode = true }: Spe
           </button>
 
           <div className="space-y-1.5" id="phrase-text-block">
-            <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+            <span className="text-[10px] uppercase font-black text-slate-700 tracking-wider">
               {bilingualMode ? "Pronuncie esta Frase / Pronounce this Sentence" : "Pronounce this Sentence"}
             </span>
-            <p className="text-lg font-bold text-slate-805 leading-normal" id="pt-phrase-text">
+            <p className="text-lg font-black text-slate-900 leading-normal" id="pt-phrase-text">
               {currentPhrase.phrase}
             </p>
-            <p className="text-[11px] text-slate-500 italic" id="en-phrase-translation">
-              "{currentPhrase.english}"
-            </p>
+            <div className="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-xl shadow-3xs mt-1">
+              <p className="text-xs text-slate-800 font-bold italic" id="en-phrase-translation">
+                "{currentPhrase.english}"
+              </p>
+            </div>
           </div>
 
-          <div className="pt-2 border-t border-slate-200/50 space-y-1" id="phonetic-advice-block">
-            <span className="text-[9px] uppercase font-bold text-amber-500 tracking-wider block">
+          <div className="pt-2 border-t border-slate-250 space-y-1 bg-slate-100 p-2.5 rounded-xl border border-slate-200 shadow-3xs" id="phonetic-advice-block">
+            <span className="text-[9px] uppercase font-black text-amber-700 tracking-wider block">
               {bilingualMode ? "Guia Fonético / Phonetic Guide" : "Phonetic guide"}
             </span>
-            <p className="font-mono text-xs text-slate-650 font-bold" id="phonetic-text">
+            <p className="font-mono text-xs text-slate-950 font-black" id="phonetic-text">
               [{currentPhrase.phonetic}]
             </p>
           </div>
         </div>
 
         {/* Tip Box */}
-        <div className="p-4 bg-indigo-50/40 rounded-2xl border border-indigo-100/50 flex gap-2 items-start" id="accent-reduction-tip-box">
-          <AlertCircle className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" id="tip-info" />
-          <p className="text-[11px] text-slate-600 leading-normal text-left" id="tip-detail">
-            <span className="font-bold text-indigo-900">
+        <div className="p-4 bg-indigo-50/80 rounded-2xl border-2 border-indigo-200 flex gap-2 items-start shadow-3xs" id="accent-reduction-tip-box">
+          <AlertCircle className="w-4.5 h-4.5 text-indigo-700 shrink-0 mt-0.5" id="tip-info" />
+          <p className="text-[11.5px] text-slate-850 font-bold leading-normal text-left" id="tip-detail">
+            <span className="font-black text-indigo-950 block mb-1 border-b border-indigo-100 pb-0.5">
               {bilingualMode ? "Conselho de Sotaque de Portugal / Locational Accent Advice:" : "Locational Accent Advice:"}
             </span> {currentPhrase.tip}
           </p>
@@ -201,10 +203,10 @@ export default function SpeakingPractice({ onEarnXp, bilingualMode = true }: Spe
                 <RefreshCw className="w-6 h-6 animate-spin" id="spin-rec-icon" />
               </button>
               <div className="text-center" id="recording-active-labels">
-                <span className="text-xs font-bold text-red-500 uppercase tracking-widest block animate-pulse">
+                <span className="text-xs font-black text-red-650 uppercase tracking-widest block animate-pulse">
                   {bilingualMode ? "Gravação Activa / Recording Active" : "Recording Active"}
                 </span>
-                <span className="text-[10px] text-slate-400 font-mono">
+                <span className="text-[11px] text-slate-800 font-black font-mono">
                   {bilingualMode ? "Fale claramente para o seu microfone agora... / Speak clearly..." : "Speak clearly into your microphone now..."}
                 </span>
               </div>
@@ -219,7 +221,7 @@ export default function SpeakingPractice({ onEarnXp, bilingualMode = true }: Spe
               >
                 <Mic className="w-6 h-6" id="mic-icon" />
               </button>
-              <span className="text-xs font-bold text-slate-600" id="tap-mic-label">
+              <span className="text-xs font-black text-slate-800" id="tap-mic-label">
                 {bilingualMode ? "Toque para Gravar a Voz / Click to Record" : "Tap to Record Speaking"}
               </span>
             </div>

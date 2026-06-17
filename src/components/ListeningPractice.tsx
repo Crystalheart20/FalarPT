@@ -91,14 +91,14 @@ export default function ListeningPractice({ onEarnXp, bilingualMode = true }: Li
             🎧
           </div>
           <div>
-            <h4 className="text-xs font-bold text-emerald-800 uppercase tracking-wider" id="listening-pm-brand">
+            <h4 className="text-xs font-black text-emerald-900 uppercase tracking-wider" id="listening-pm-brand">
               {bilingualMode ? "Laboratório de Escuta Situacional / Situational Listening Lab" : "Laboratório de Escuta Situacional"}
             </h4>
-            <p className="text-xs text-emerald-705 mt-1 leading-relaxed" id="listening-pm-rationale">
+            <p className="text-xs text-emerald-950 mt-1 leading-relaxed font-semibold" id="listening-pm-rationale">
               {bilingualMode ? (
                 <>
                   Pratique ouvir diálogos cotidianos e reais gravados com a pronúncia tradicional de Portugal. Desative as traduções para simular uma imersão completa nas ruas de Lisboa ou do Porto.
-                  <span className="block mt-1 text-slate-500 text-[11px] border-t border-emerald-205 border-emerald-200/50 pt-1 font-medium italic">
+                  <span className="block mt-2.5 text-slate-800 text-[11.5px] border-t border-emerald-300 pt-2 font-bold not-italic">
                     Practice listening to real daily-life dialogues constructed with strict Portuguese accents. Toggle translation off to simulate complete immersion.
                   </span>
                 </>
@@ -110,8 +110,8 @@ export default function ListeningPractice({ onEarnXp, bilingualMode = true }: Li
         </div>
 
         {/* Dialogues */}
-        <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-2.5" id="dialogues-menu-card">
-          <h3 className="text-xs font-bold text-slate-405 uppercase tracking-wider mb-2" id="dialogues-header">
+        <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-2.5 shadow-2xs" id="dialogues-menu-card">
+          <h3 className="text-xs font-black text-slate-700 uppercase tracking-wider mb-2" id="dialogues-header">
             {bilingualMode ? "Cenários Autênticos / Authentic Scenarios" : "Authentic Scenarios"}
           </h3>
           {sampleDialogues.map((dial) => (
@@ -142,27 +142,27 @@ export default function ListeningPractice({ onEarnXp, bilingualMode = true }: Li
 
         {/* Translation toggles */}
         <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-3" id="translation-settings-card">
-          <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider" id="settings-header">
+          <h4 className="text-xs font-black text-slate-700 uppercase tracking-wider" id="settings-header">
             {bilingualMode ? "Definições de Áudio / Audio Settings" : "Audio Settings"}
           </h4>
           <button
             id="toggle-translations-btn"
             onClick={() => setShowTranslations(!showTranslations)}
-            className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-colors text-slate-705 text-xs py-2.5 px-3 rounded-xl font-bold flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors text-slate-900 text-xs py-2.5 px-3 rounded-xl font-black flex items-center justify-center gap-2 cursor-pointer"
           >
             {showTranslations ? (
               <>
-                <EyeOff className="w-4 h-4 text-slate-550" id="eyeoff-icon" />
+                <EyeOff className="w-4 h-4 text-slate-800" id="eyeoff-icon" />
                 {bilingualMode ? "Ocultar Tradução / Hide Translations" : "Hide English Translations"}
               </>
             ) : (
               <>
-                <Eye className="w-4 h-4 text-slate-550" id="eye-icon" />
+                <Eye className="w-4 h-4 text-slate-800" id="eye-icon" />
                 {bilingualMode ? "Mostrar Tradução / Show Translations" : "Show English Translations"}
               </>
             )}
           </button>
-          <p className="text-[10px] text-slate-405 leading-normal text-center" id="settings-hint">
+          <p className="text-[11px] text-slate-800 leading-normal text-center font-bold bg-slate-150 p-2 rounded-xl border border-slate-200" id="settings-hint">
             {bilingualMode ? "Ao ocultar as traduções, força o cérebro a descodificar os fonemas puros de Portugal, simulando imersão!" : "Hiding translations forces you to decode the auditory signals by ear, replicating a local Portugal environment!"}
           </p>
         </div>
@@ -178,10 +178,10 @@ export default function ListeningPractice({ onEarnXp, bilingualMode = true }: Li
               <span className="bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md border border-emerald-100" id="dialogue-diff-badge">
                 {currentDialogue.difficulty}
               </span>
-              <h2 className="text-lg lg:text-xl font-bold text-slate-800 tracking-tight mt-1.5" id="dialogue-title-heading">
+              <h2 className="text-lg lg:text-xl font-black text-slate-900 tracking-tight mt-1.5" id="dialogue-title-heading">
                 {currentDialogue.title}
               </h2>
-              <p className="text-xs text-slate-500 font-medium mt-1 italic" id="dialogue-scenario">
+              <p className="text-xs text-slate-800 font-extrabold mt-1 italic" id="dialogue-scenario">
                 {bilingualMode ? "Cenário / Scene" : "Scene"}: {currentDialogue.scenario}
               </p>
             </div>
@@ -217,27 +217,27 @@ export default function ListeningPractice({ onEarnXp, bilingualMode = true }: Li
                   {/* Speech Bubble */}
                   <div className="space-y-1.5" id={`bubble-wrapper-${index}`}>
                     {/* Speaker name */}
-                    <span className="text-[10px] text-slate-400 font-bold block" id={`bubble-speaker-${index}`}>
+                    <span className="text-[11px] text-slate-700 font-black block" id={`bubble-speaker-${index}`}>
                       {line.speaker}
                     </span>
 
                     {/* PT line text */}
-                    <div className={`p-4 rounded-2xl border ${
+                    <div className={`p-4 rounded-2xl border-2 ${
                       worksAsSpeaker 
-                        ? 'bg-slate-50 border-slate-100 text-slate-800 rounded-tl-none' 
-                        : 'bg-emerald-50/30 border-emerald-100/60 text-slate-800 rounded-tr-none'
+                        ? 'bg-slate-50 border-slate-200 text-slate-900 rounded-tl-none' 
+                        : 'bg-emerald-50/50 border-emerald-250 border-emerald-200 text-slate-900 rounded-tr-none'
                     }`} id={`bubble-text-${index}`}>
                       <div className="flex justify-between items-start gap-4" id={`text-sound-row-${index}`}>
-                        <p className={`text-xs font-semibold leading-relaxed ${activeVoiceLineIndex === index ? 'text-indigo-600 bg-indigo-50/50 rounded px-1' : ''}`} id={`line-pt-${index}`}>
+                        <p className={`text-xs font-bold leading-relaxed ${activeVoiceLineIndex === index ? 'text-indigo-900 bg-indigo-100/60 rounded px-1 w-full font-black' : 'text-slate-900'}`} id={`line-pt-${index}`}>
                           {line.pt}
                         </p>
                         <button
                           id={`line-audio-btn-${index}`}
                           onClick={() => speakLine(line, index)}
-                          className={`p-1.5 rounded-lg border transition-all ${
+                          className={`p-1.5 rounded-lg border-2 transition-all ${
                             activeVoiceLineIndex === index
                               ? 'bg-indigo-600 border-indigo-600 text-white animate-pulse'
-                              : 'bg-white border-slate-100 text-slate-400 hover:text-indigo-600 hover:border-indigo-100 hover:bg-indigo-50/40 cursor-pointer'
+                              : 'bg-white border-slate-200 text-slate-700 hover:text-indigo-650 hover:border-indigo-200 hover:bg-indigo-50/40 cursor-pointer'
                           }`}
                           title="Speak sentence in European Portuguese accent"
                         >
@@ -247,7 +247,7 @@ export default function ListeningPractice({ onEarnXp, bilingualMode = true }: Li
 
                       {/* EN line translation if toggle enabled */}
                       {showTranslations && (
-                        <p className="text-[10px] text-slate-500 italic border-t border-slate-200/50 mt-2 pt-2" id={`line-en-${index}`}>
+                        <p className="text-[11.5px] text-slate-800 font-bold border-t border-slate-200/80 mt-2.5 pt-2" id={`line-en-${index}`}>
                           {line.en}
                         </p>
                       )}
@@ -259,15 +259,15 @@ export default function ListeningPractice({ onEarnXp, bilingualMode = true }: Li
           </div>
 
           {/* Dialogue Comprehension quiz */}
-          <div className="bg-slate-50/80 p-5 rounded-3xl border border-slate-100 space-y-4" id="dialogue-comprehension-quiz">
+          <div className="bg-slate-100 p-5 rounded-3xl border border-slate-200 space-y-4 shadow-sm" id="dialogue-comprehension-quiz">
             <div className="flex items-center gap-1.5" id="dial-quiz-header">
-              <Headphones className="w-4.5 h-4.5 text-indigo-500" id="dial-quiz-icon" />
-              <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400 animate-pulse" id="dial-quiz-label">
+              <Headphones className="w-4.5 h-4.5 text-indigo-700" id="dial-quiz-icon" />
+              <h4 className="font-black text-indigo-950 text-xs uppercase tracking-wider" id="dial-quiz-label">
                 {bilingualMode ? "Teste de Compreensão do Diálogo / Dialogue Comprehension Quests" : "Dialogue Comprehension Quests"}
               </h4>
             </div>
 
-            <p className="text-xs font-bold text-slate-700" id="dial-question">
+            <p className="text-xs font-black text-slate-900" id="dial-question">
               {currentDialogue.quiz.question}
             </p>
 
@@ -333,8 +333,8 @@ export default function ListeningPractice({ onEarnXp, bilingualMode = true }: Li
                       : bilingualMode ? 'Falha na Compreensão / Comprehension Failed' : 'Comprehension Failed'}
                   </h5>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed" id="dial-feedback-explanation">
-                  <span className="font-semibold text-slate-800" id="dial-ex-pfx">
+                <p className="text-xs text-slate-900 font-extrabold leading-relaxed" id="dial-feedback-explanation">
+                  <span className="font-black text-slate-950" id="dial-ex-pfx">
                     {bilingualMode ? "Explicação / Explanation:" : "Explanation:"}
                   </span> {currentDialogue.quiz.explanation}
                 </p>

@@ -277,10 +277,10 @@ export default function App() {
             {/* Bilingual Mode Toggle (Translation assistance for beginners) */}
             <button
               onClick={() => setBilingualMode(!bilingualMode)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition-all border cursor-pointer ${
                 bilingualMode
                   ? 'bg-indigo-600 border-indigo-600 text-white shadow-xs'
-                  : 'bg-slate-50 border-slate-205 border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-100'
+                  : 'bg-slate-200 border-slate-350 text-slate-900 hover:text-indigo-900 hover:bg-slate-300'
               }`}
               id="bilingual-mode-toggle"
               title={bilingualMode ? "Disable bilingual assistance" : "Enable bilingual assistance"}
@@ -304,7 +304,7 @@ export default function App() {
           <h2 className="text-2xl lg:text-3.5xl font-black tracking-tight text-white max-w-2xl leading-tight">
             Domine o Português Europeu de forma viciante, simples e bela.
           </h2>
-          <p className="text-xs text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-xs text-slate-200 font-bold max-w-xl leading-relaxed">
             Esqueça as fórmulas de outros continentes. Aprenda o vocabulário autêntico ("telemóvel", "comboio"), a colocação exata de pronomes ("liguei-te") e a redução vocálica de Lisboa ou Porto, avançando pelas ligas competitivas!
           </p>
         </div>
@@ -320,16 +320,18 @@ export default function App() {
             🦉
           </div>
           <div id="advisor-content">
-            <span className="text-[9px] uppercase tracking-wider font-bold text-slate-400 block">
+            <span className="text-[10px] uppercase tracking-wider font-extrabold text-slate-800 block">
               {bilingualMode ? "Dica do Seu Tutor Virtual / Virtual Tutor's Dynamic Tip" : "Dica do Seu Tutor Virtual"}
             </span>
-            <p className="text-xs text-slate-705 font-bold italic leading-relaxed" id="encouragement-text">
+            <p className="text-xs text-slate-950 font-black italic leading-relaxed" id="encouragement-text">
               {tutorTipObj.pt}
             </p>
             {bilingualMode && (
-              <p className="text-[10px] text-slate-450 text-slate-500 font-medium italic leading-relaxed mt-0.5" id="encouragement-text-en">
-                ({tutorTipObj.en})
-              </p>
+              <div className="bg-slate-100 p-2 rounded-xl mt-2 border border-slate-300 inline-block shadow-3xs">
+                <p className="text-[11px] text-slate-900 font-extrabold not-italic leading-relaxed animate-fade-in" id="encouragement-text-en">
+                  ({tutorTipObj.en})
+                </p>
+              </div>
             )}
           </div>
         </div>
@@ -353,13 +355,13 @@ export default function App() {
                   setActiveTab(tab.id as any);
                   setIsLessonActive(false);
                 }}
-                className={`px-4 sm:px-6 py-3.5 text-xs font-bold transition-all border-b-2 cursor-pointer flex items-center gap-2 ${
+                className={`px-4 sm:px-6 py-3.5 text-xs font-black transition-all border-b-2 cursor-pointer flex items-center gap-2 ${
                   isTabActive
-                    ? 'border-indigo-600 text-indigo-750 font-extrabold text-indigo-700'
-                    : 'border-transparent text-slate-400 hover:text-slate-700'
+                    ? 'border-indigo-600 text-indigo-900 font-black'
+                    : 'border-transparent text-slate-700 hover:text-slate-950'
                 }`}
               >
-                <IconComponent className={`w-4 h-4 ${isTabActive ? 'text-indigo-600' : 'text-slate-400'}`} />
+                <IconComponent className={`w-4 h-4 ${isTabActive ? 'text-indigo-600 font-black' : 'text-slate-600'}`} />
                 {tab.label}
               </button>
             );
@@ -375,20 +377,20 @@ export default function App() {
               
               {/* CEFR Levels selection bar */}
               <div className="space-y-2" id="cefr-bar-section">
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block font-mono">Progresso por Nível do Quadro Europeu</span>
+                <span className="text-xs text-slate-800 font-extrabold uppercase tracking-wider block font-mono">Progresso por Nível do Quadro Europeu</span>
                 <div className="grid grid-cols-3 sm:grid-cols-6 gap-2" id="cefr-switches">
                   {cefrLevels.map((lvl) => (
                     <button
                       key={lvl.id}
                       onClick={() => setSelectedCefrId(lvl.id)}
-                      className={`p-3 rounded-xl flex flex-col items-center justify-center border text-center transition-all cursor-pointer relative ${
+                      className={`p-3 rounded-xl flex flex-col items-center justify-center border-2 text-center transition-all cursor-pointer relative ${
                         selectedCefrId === lvl.id
                           ? 'bg-slate-900 border-slate-900 text-white shadow-xs'
-                          : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600'
+                          : 'bg-white hover:bg-slate-50 border-slate-300 text-slate-800 font-bold'
                       }`}
                     >
                       <span className="text-xs font-black tracking-widest">{lvl.id}</span>
-                      <span className="text-[9px] uppercase tracking-wider font-semibold opacity-80">{lvl.title.split(' ')[1]}</span>
+                      <span className="text-[9px] uppercase tracking-wider font-extrabold opacity-95">{lvl.title.split(' ')[1]}</span>
                     </button>
                   ))}
                 </div>
@@ -400,9 +402,9 @@ export default function App() {
                 <div className="max-w-xl mx-auto bg-white rounded-3xl border border-slate-100 shadow-md p-6 lg:p-8 space-y-6 animate-fade-in" id="lesson-player-workspace">
                   
                   {/* Top lesson player state */}
-                  <div className="flex justify-between items-center text-xs text-slate-400 border-b border-slate-50 pb-3" id="player-header">
+                  <div className="flex justify-between items-center text-xs text-slate-800 font-bold border-b-2 border-slate-200 pb-3" id="player-header">
                     <span className="font-mono">Pergunta {currentQuestionIndex + 1} de {customA1QuizQuestions.length}</span>
-                    <span className="text-indigo-600 bg-indigo-50 font-bold px-2 py-0.5 rounded-full">
+                    <span className="text-indigo-800 bg-indigo-100 font-black px-2.5 py-1 rounded-full border border-indigo-200 shadow-3xs">
                       Poder de XP: +{(currentQuestionIndex + 1) * 15} XP
                     </span>
                   </div>
@@ -412,13 +414,15 @@ export default function App() {
                     <span className="text-[10px] bg-indigo-50 text-indigo-700 font-bold px-2.5 py-1 rounded uppercase tracking-wider">
                       {bilingualMode ? "Escolha a Resposta Correta / Choose the Correct Answer" : "Escolha a Resposta Correta"}
                     </span>
-                    <h3 className="text-md font-bold text-slate-805 leading-normal pt-1" id="question-text">
+                    <h3 className="text-md font-black text-slate-900 leading-normal pt-1" id="question-text">
                       {customA1QuizQuestions[currentQuestionIndex].question}
                     </h3>
                     {bilingualMode && (
-                      <p className="text-xs text-slate-500 italic font-medium -mt-1 leading-normal pb-1">
-                        ({customA1QuizQuestions[currentQuestionIndex].questionEn})
-                      </p>
+                      <div className="bg-slate-100 border border-slate-200 px-3 py-1 rounded-xl shadow-3xs inline-block mt-1">
+                        <p className="text-xs text-slate-800 font-bold">
+                          ({customA1QuizQuestions[currentQuestionIndex].questionEn})
+                        </p>
+                      </div>
                     )}
 
                     {/* Options Grid */}

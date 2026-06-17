@@ -141,11 +141,11 @@ export default function GrammarPractice({ onEarnXp, bilingualMode = true }: Gram
 
           {/* Theoretical Concept */}
           <div className="space-y-3" id="lesson-concept-block">
-            <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400 flex items-center gap-1.5" id="concept-label">
-              <BookOpen className="w-4 h-4 text-sky-500" id="reading-icon" />
+            <h3 className="font-black text-slate-800 text-xs uppercase tracking-wider flex items-center gap-1.5" id="concept-label">
+              <BookOpen className="w-4.5 h-4.5 text-sky-600" id="reading-icon" />
               {bilingualMode ? "Conceito Pedagógico Gramatical / Grammar Theory Concept" : "Pedagogical Grammar Concept"}
             </h3>
-            <p className="text-xs text-slate-600 leading-relaxed" id="concept-description">
+            <p className="text-xs text-slate-900 font-bold leading-relaxed" id="concept-description">
               {currentRule.description}
             </p>
           </div>
@@ -172,34 +172,34 @@ export default function GrammarPractice({ onEarnXp, bilingualMode = true }: Gram
 
           {/* Model Examples */}
           <div className="space-y-3" id="lesson-examples-section">
-            <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400" id="examples-label">
+            <h3 className="font-black text-slate-800 text-xs uppercase tracking-wider" id="examples-label">
               {bilingualMode ? "Exemplos Padrão em Portugal / Standard PT-PT Examples" : "Standard PT-PT Examples"}
             </h3>
             <div className="space-y-2.5" id="examples-cards">
               {currentRule.examples.map((ex, index) => (
-                <div key={index} className="bg-slate-50/50 border border-slate-100 p-4 rounded-xl" id={`example-card-${index}`}>
-                  <p className="text-xs font-bold text-slate-800" id={`example-pt-${index}`}>
+                <div key={index} className="bg-slate-105 bg-slate-100 hover:bg-slate-200/50 border-2 border-slate-200 p-4 rounded-xl" id={`example-card-${index}`}>
+                  <p className="text-xs font-black text-slate-950" id={`example-pt-${index}`}>
                     "{ex.pt}"
                   </p>
-                  <p className="text-xs text-slate-500 mt-0.5" id={`example-en-${index}`}>
-                    {ex.en}
+                  <p className="text-xs text-slate-800 font-bold mt-1" id={`example-en-${index}`}>
+                    ({ex.en})
                   </p>
-                  <span className="inline-block mt-2 text-[10px] text-indigo-600 bg-indigo-50/60 font-medium px-2 py-0.5 rounded-md" id={`example-context-${index}`}>
+                  <span className="inline-block mt-2 text-[10px] text-indigo-950 bg-indigo-100 border border-indigo-200 font-black px-2 py-0.5 rounded-md" id={`example-context-${index}`}>
                     {bilingualMode ? `Contexto / Context: ${ex.context}` : `Context: ${ex.context}`}
                   </span>
                 </div>
               ))}
             </div>
                {/* Interactive Lesson Quiz */}
-          <div className="bg-slate-50/80 p-5 rounded-3xl border border-slate-100 space-y-4" id="lesson-quiz-panel">
+          <div className="bg-slate-100 p-5 rounded-3xl border-2 border-slate-250 border-slate-200 space-y-4 shadow-3xs" id="lesson-quiz-panel">
             <div className="flex items-center gap-1.5" id="quiz-header-layout">
-              <HelpCircle className="w-4.5 h-4.5 text-indigo-500" id="quiz-badge-icon" />
-              <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400" id="quiz-header-label">
+              <HelpCircle className="w-5 h-5 text-indigo-800" id="quiz-badge-icon" />
+              <h4 className="font-black text-slate-800 text-xs uppercase tracking-wider" id="quiz-header-label">
                 {bilingualMode ? "Questão de Verificação Prática / Concept Check" : "Interactive Concept Check"}
               </h4>
             </div>
 
-            <p className="text-xs font-bold text-slate-700" id="quiz-question-text">
+            <p className="text-xs font-black text-slate-950" id="quiz-question-text">
               {currentRule.quiz.question}
             </p>
 
@@ -249,25 +249,25 @@ export default function GrammarPractice({ onEarnXp, bilingualMode = true }: Gram
             )}
 
             {quizSubmitted && (
-              <div className={`p-4 rounded-2xl border space-y-2 ${
+              <div className={`p-4 rounded-2xl border-2 space-y-2 ${
                 answeredCorrectly 
-                  ? 'bg-green-50/30 border-green-105 bg-green-50/30 border-green-100 text-green-900' 
-                  : 'bg-red-50/30 border-red-105 bg-red-50/30 border-red-100 text-red-900'
+                  ? 'bg-green-100 border-green-300 text-green-950' 
+                  : 'bg-red-105 bg-red-100 border-red-300 text-red-955'
               }`} id="quiz-feedback-box">
                 <div className="flex items-center gap-1.5" id="feedback-grade-block">
                   {answeredCorrectly ? (
-                    <CheckCircle className="w-4.5 h-4.5 text-green-600" id="feedback-icon-success" />
+                    <CheckCircle className="w-4.5 h-4.5 text-green-850" id="feedback-icon-success" />
                   ) : (
-                    <AlertCircle className="w-4.5 h-4.5 text-red-650" id="feedback-icon-fail" />
+                    <AlertCircle className="w-4.5 h-4.5 text-red-850" id="feedback-icon-fail" />
                   )}
-                  <h5 className="font-bold text-xs" id="feedback-grade-title">
+                  <h5 className="font-extrabold text-xs" id="feedback-grade-title">
                     {answeredCorrectly 
                       ? bilingualMode ? 'Gabaritado com Sucesso! / Correct (+25 XP)' : 'Excellent Job! (+25 XP Earned)'
                       : bilingualMode ? 'Necessita de Correção / Mistake Identified' : 'Correction Requested'}
                   </h5>
                 </div>
-                <p className="text-xs text-slate-650 leading-relaxed font-semibold" id="feedback-explanation">
-                  <span className="font-bold text-slate-800" id="explanation-prefix">
+                <p className="text-xs text-slate-900 leading-relaxed font-bold" id="feedback-explanation">
+                  <span className="font-black text-slate-950" id="explanation-prefix">
                     {bilingualMode ? "Nota do Tutor IA / Tutor's Note:" : "Tutor's Note:"}
                   </span> {currentRule.quiz.explanation}
                 </p>

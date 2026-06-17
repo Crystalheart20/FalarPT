@@ -86,14 +86,14 @@ export default function ReadingPractice({ onEarnXp, bilingualMode = true }: Read
             📖
           </div>
           <div>
-            <h4 className="text-xs font-bold text-violet-800 uppercase tracking-wider" id="reading-pm-brand">
+            <h4 className="text-xs font-black text-violet-900 uppercase tracking-wider" id="reading-pm-brand">
               {bilingualMode ? "Biblioteca de Leitura Interativa / Reading Practice" : "Biblioteca de Leitura Interativa"}
             </h4>
-            <p className="text-xs text-violet-700/95 mt-1 leading-relaxed" id="reading-pm-rationale">
+            <p className="text-xs text-violet-950 mt-1 leading-relaxed font-semibold animate-fade-in" id="reading-pm-rationale">
               {bilingualMode ? (
                 <>
                   Explore histórias ricas em vocabulário e contextos práticos de Portugal. Passe o cursor ou toque nas palavras sublinhadas para ver traduções instantâneas.
-                  <span className="block mt-1 text-slate-500 text-[11px] border-t border-violet-200/50 pt-1 font-medium italic">
+                  <span className="block mt-2.5 text-slate-800 text-[11.5px] border-t border-violet-300 pt-2 font-bold not-italic">
                     Explore story environments with European Portuguese settings. Hover or click underlined words to access instant glossary details.
                   </span>
                 </>
@@ -105,8 +105,8 @@ export default function ReadingPractice({ onEarnXp, bilingualMode = true }: Read
         </div>
 
         {/* Story Selector List */}
-        <div className="bg-white rounded-2xl border border-slate-100 p-4 space-y-2.5" id="stories-menu-card">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" id="stories-header">
+        <div className="bg-white rounded-2xl border border-slate-200 p-4 space-y-2.5 shadow-2xs" id="stories-menu-card">
+          <h3 className="text-xs font-black text-slate-700 uppercase tracking-wider mb-2" id="stories-header">
             {bilingualMode ? "Catálogo de Histórias / Stories Catalog" : "Reading Library Catalog"}
           </h3>
           {sampleStories.map((story) => (
@@ -135,24 +135,24 @@ export default function ReadingPractice({ onEarnXp, bilingualMode = true }: Read
         </div>
 
         {/* Instant Dictionary Tooltip Widget */}
-        <div className="bg-slate-950 text-slate-100 rounded-2xl p-5 border border-slate-850 shadow-md space-y-3" id="dictionary-tooltip-widget">
+        <div className="bg-slate-905 bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-md space-y-3" id="dictionary-tooltip-widget">
           <div className="flex items-center gap-2 border-b border-slate-800 pb-2.5" id="dict-header">
-            <Info className="w-4 h-4 text-amber-400" id="dict-info-icon" />
-            <h4 className="text-[10px] uppercase font-bold tracking-wider text-slate-400" id="dict-title">
+            <Info className="w-4 h-4 text-emerald-400 animate-pulse" id="dict-info-icon" />
+            <h4 className="text-[10px] uppercase font-black tracking-wider text-slate-300" id="dict-title">
               {bilingualMode ? "Dicionário Instantâneo / Instant Glossary" : "Instant Reader Glossary"}
             </h4>
           </div>
           {hoveredVocab ? (
-            <div className="space-y-1" id="dict-content-loaded">
-              <span className="font-mono text-xs font-bold text-amber-300" id="dict-pt-word">
+            <div className="space-y-1.5" id="dict-content-loaded">
+              <span className="font-mono text-xs font-black text-amber-350 block border-b border-slate-800 pb-1" id="dict-pt-word">
                 {hoveredVocab.word}
               </span>
-              <p className="text-xs text-slate-300 leading-normal" id="dict-definition">
+              <p className="text-xs text-slate-100 font-extrabold leading-normal" id="dict-definition">
                 {hoveredVocab.definition}
               </p>
             </div>
           ) : (
-            <p className="text-xs text-slate-500 leading-normal italic" id="dict-empty-notes">
+            <p className="text-xs text-slate-205 text-slate-200 font-black leading-normal" id="dict-empty-notes">
               {bilingualMode 
                 ? "Passe o cursor sobre as palavras sublinhadas para revelar explicações em inglês e marcas de género. / Hover over text words..." 
                 : "Hover over colored words inside the story text to see instant English explanations, gender markers, and conjugation details here."}
@@ -171,12 +171,14 @@ export default function ReadingPractice({ onEarnXp, bilingualMode = true }: Read
               <span className="bg-violet-50 text-violet-700 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md border border-violet-100" id="story-diff-badge">
                 {currentStory.difficulty}
               </span>
-              <h2 className="text-lg lg:text-xl font-bold text-slate-800 tracking-tight mt-1.5" id="story-title-heading">
+              <h2 className="text-lg lg:text-xl font-black text-slate-900 tracking-tight mt-1.5" id="story-title-heading">
                 {currentStory.title}
               </h2>
-              <p className="text-xs text-slate-400 mt-1" id="story-summary-note">
-                {currentStory.summary}
-              </p>
+              <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-xl mt-2 shadow-3xs">
+                <p className="text-xs text-slate-800 font-bold" id="story-summary-note">
+                  {currentStory.summary}
+                </p>
+              </div>
             </div>
             {solvedStoryIds.has(currentStory.id) && (
               <span className="flex items-center gap-1 bg-green-50 text-green-700 text-xs px-2.5 py-1 rounded-full border border-green-200 font-bold shrink-0" id="story-xp-badge">
@@ -195,12 +197,12 @@ export default function ReadingPractice({ onEarnXp, bilingualMode = true }: Read
                 </div>
                 
                 {/* Secondary English help */}
-                <details className="group border-t border-slate-100 pt-3" id={`para-details-${pIdx}`}>
-                  <summary className="text-[10px] font-bold text-slate-400 hover:text-indigo-600 transition-colors uppercase tracking-wider cursor-pointer list-none flex items-center gap-1" id={`para-summary-${pIdx}`}>
-                    <Sparkles className="w-3.5 h-3.5" id="sparkles-icon" />
+                <details className="group border-t border-slate-250 pt-3" id={`para-details-${pIdx}`}>
+                  <summary className="text-[11px] font-black text-slate-705 text-slate-700 hover:text-indigo-650 transition-colors uppercase tracking-wider cursor-pointer list-none flex items-center gap-1.5" id={`para-summary-${pIdx}`}>
+                    <Sparkles className="w-3.5 h-3.5 text-indigo-700" id="sparkles-icon" />
                     {bilingualMode ? "Revelar Tradução do Parágrafo / Reveal Translation" : "Reveal Paragraph Translation"}
                   </summary>
-                  <p className="text-[11px] text-slate-500 italic mt-2 leading-relaxed" id={`para-en-${pIdx}`}>
+                  <p className="text-[12px] text-slate-900 font-extrabold mt-2 leading-relaxed bg-indigo-50/40 p-2 rounded-xl border border-indigo-100/50" id={`para-en-${pIdx}`}>
                     {para.textEn}
                   </p>
                 </details>
@@ -209,15 +211,15 @@ export default function ReadingPractice({ onEarnXp, bilingualMode = true }: Read
           </div>
 
           {/* Story Comprehension Quiz */}
-          <div className="bg-slate-50/85 p-5 rounded-3xl border border-slate-100 space-y-4" id="story-comprehension-quiz">
+          <div className="bg-slate-100 p-5 rounded-3xl border border-slate-200 space-y-4 shadow-sm" id="story-comprehension-quiz">
             <div className="flex items-center gap-1.5" id="story-quiz-header">
-              <HelpCircle className="w-4.5 h-4.5 text-indigo-500" id="story-quiz-icon" />
-              <h4 className="font-bold text-slate-805 text-xs uppercase tracking-wider text-slate-400" id="story-quiz-label">
+              <HelpCircle className="w-4.5 h-4.5 text-indigo-700" id="story-quiz-icon" />
+              <h4 className="font-black text-indigo-950 text-xs uppercase tracking-wider" id="story-quiz-label">
                 {bilingualMode ? "Desafio de Compreensão da História / Story Comprehension check" : "Story Comprehension check"}
               </h4>
             </div>
 
-            <p className="text-xs font-semibold text-slate-700" id="story-question text">
+            <p className="text-xs font-black text-slate-905 text-slate-900" id="story-question text">
               {currentStory.questions[0].question}
             </p>
 
@@ -283,8 +285,8 @@ export default function ReadingPractice({ onEarnXp, bilingualMode = true }: Read
                       : bilingualMode ? 'Compreensão Incorreta / Comprehension Failed' : 'Comprehension Failed'}
                   </h5>
                 </div>
-                <p className="text-xs text-slate-650 leading-relaxed" id="story-explanation">
-                  <span className="font-semibold text-slate-800" id="story-exp-pfx">
+                <p className="text-xs text-slate-900 font-extrabold leading-relaxed" id="story-explanation">
+                  <span className="font-black text-slate-950" id="story-exp-pfx">
                     {bilingualMode ? "Explicação / Explanation:" : "Explanation:"}
                   </span> {currentStory.questions[0].explanation}
                 </p>
